@@ -47,11 +47,12 @@
             {
                 sbl.AppendLine(BuildLoadByPrimaryKeyMethod(schema, modelName, tableName));
                 //sbl.AppendLine(BuildDeleteAllMethod(schema, modelName, tableName));
-                sbl.AppendLine(BuildLoadPagingMethod(schema, modelName, tableName));
+                //sbl.AppendLine(BuildLoadPagingMethod(schema, modelName, tableName));
                 sbl.AppendLine(BuildDeleteByPrimaryKeyMethod(schema, modelName, tableName));
-                sbl.AppendLine(BuildUpdateMethod(schema, modelName, tableName));
+                sbl.AppendLine(BuildUpdateMethod(schema, modelName, tableName));                
             }
             sbl.AppendLine(BuildInsertMethod(schema, modelName, tableName));
+            sbl.AppendLine(BuildDBToModelCode(schema, modelName));
             return sbl.ToString();
         }
 
@@ -68,8 +69,8 @@
             sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(3, "{"));
             sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(4, "while (reader.Read())"));
             sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(4, "{"));
-            sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(5, @"{0} model = new {0}();", modelName));
-            sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(0, BuildDBToModelCode(schema, modelName)));
+            sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(5, @"{0} model = ConvertToModel(reader);", modelName));
+            //sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(0, BuildDBToModelCode(schema, modelName)));
             sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(5, "itemList.Add(model);"));
             sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(4, "}"));
             sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(3, "}"));
@@ -101,15 +102,20 @@
         {
             StringBuilder sbl = new StringBuilder(256);
             int idx = 0;
+            sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(2, "public static {0} ConvertToModel(DbDataReader reader)", modelName));
+            sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(2, "{"));
+            sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(3, @"{0} model = new {0}();", modelName));
             foreach (DataRow row in schema.Rows)
             {
                 string propertyName = CodeBuilderAssistant.GetPropertyName(row["ColumnName"].ToString());
                 string dbTypeName = row["DataTypeName"].ToString();
                 string defaultValueCode = CodeBuilderAssistant.GetColumnDefaultValue(dbTypeName);
                 string convertActionCode = CodeBuilderAssistant.GetColumnConvertFromDBCode(dbTypeName, idx);
-                sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(5, "model.{0} = reader.IsDBNull({1}) ? {2} : {3};", propertyName, idx, defaultValueCode, convertActionCode));
+                sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(3, "model.{0} = reader.IsDBNull({1}) ? {2} : {3};", propertyName, idx, defaultValueCode, convertActionCode));
                 idx++;
             }
+            sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(3, "return model;"));
+            sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(2, "}"));
 
             return sbl.ToString();
         }
@@ -124,15 +130,15 @@
             sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(3, @"string strSql = @""{0}"";", BuildLoadPagingSqlCode(schema, tableName)));
             sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(3, @"List<DbParameter> paramList = new List<DbParameter>();"));
 
-            sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(3, @"paramList.Add(new DbParameter(""@pagenum"", pagenum) { SqlDbType = SqlDbType.Int });"));
-            sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(3, @"paramList.Add(new DbParameter(""@pagesize"", pagesize) { SqlDbType = SqlDbType.Int });"));
+            sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(3, @"paramList.Add(DBAccesser.DbInstance.BuildDbParameter(""@pagenum"", pagenum, DbType.Int32));"));
+            sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(3, @"paramList.Add(DBAccesser.DbInstance.BuildDbParameter(""@pagesize"", pagesize, DbType.Int32));"));
 
-            sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(3, "using (DbDataReader reader = DBAccesser.DbInstance.ExecuteReader(strSql, paramList.ToArray()))"));
+            sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(3, "using (DbDataReader reader = DBAccesser.DbInstance.ExecuteReader(strSql, CommandType.Text, paramList.ToArray()))"));
             sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(3, "{"));
             sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(4, "while (reader.Read())"));
             sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(4, "{"));
-            sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(5, @"{0} model = new {0}();", modelName));
-            sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(0, BuildDBToModelCode(schema, modelName)));
+            sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(5, @"{0} model = ConvertToModel(reader);", modelName));
+            //sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(0, BuildDBToModelCode(schema, modelName)));
             sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(5, "itemList.Add(model);"));
             sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(4, "}"));
             sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(3, "}"));
@@ -194,12 +200,12 @@
             sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(3, @"string strSql = @""{0}"";", BuildSelectByPrimaryKeySqlCode(schema, tableName)));
             sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(3, @"List<DbParameter> paramList = new List<DbParameter>();"));
             sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(0, BuildPrimaryKeyModelToDBCode(schema)));
-            sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(3, "using (DbDataReader reader = DBAccesser.DbInstance.ExecuteReader(strSql, paramList.ToArray()))"));
+            sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(3, "using (DbDataReader reader = DBAccesser.DbInstance.ExecuteReader(strSql, CommandType.Text, paramList.ToArray()))"));
             sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(3, "{"));
             sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(4, "while (reader.Read())"));
             sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(4, "{"));
-            sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(5, "model = new {0}();", modelName));
-            sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(0, BuildDBToModelCode(schema, modelName)));
+            sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(5, "model = ConvertToModel(reader);", modelName));
+            //sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(0, BuildDBToModelCode(schema, modelName)));
             sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(5, "break;"));
             sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(4, "}"));
             sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(3, "}"));
@@ -265,7 +271,7 @@
                     string dbTypeName = row["DataTypeName"].ToString();
                     string convertActionCode = CodeBuilderAssistant.GetColumnConvertToDBCode(dbTypeName, propertyName).Replace("model.", String.Empty);
                     string sqlDbType = CodeBuilderAssistant.GetColumnSqlDbType(dbTypeName);
-                    sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(3, @"paramList.Add(new DbParameter(""@{0}"", {1}) {{ SqlDbType = SqlDbType.{2} }});", row["ColumnName"], convertActionCode, sqlDbType));
+                    sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(3, @"paramList.Add(DBAccesser.DbInstance.BuildDbParameter(""@{0}"", {1}, DbType.{2}));", row["ColumnName"], convertActionCode, sqlDbType));
                 }
             }
             return sbl.ToString();
@@ -279,7 +285,7 @@
             sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(3, @"string strSql = @""{0}"";", BuildUpdateSqlCode(schema, tableName)));
             sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(3, @"List<DbParameter> paramList = new List<DbParameter>();"));
             sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(0, BuildUpdateModelToDBCode(schema)));
-            sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(3, "int res = DBAccesser.DbInstance.ExecuteNonQuery(strSql, paramList.ToArray());"));
+            sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(3, "int res = DBAccesser.DbInstance.ExecuteNonQuery(strSql, CommandType.Text, paramList.ToArray());"));
             sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(3, "return res > 0 ; "));
             sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(2, "}"));
             return sbl.ToString();
@@ -327,7 +333,7 @@
                     string dbTypeName = row["DataTypeName"].ToString();
                     string convertActionCode = CodeBuilderAssistant.GetColumnConvertToDBCode(dbTypeName, propertyName);
                     string sqlDbType = CodeBuilderAssistant.GetColumnSqlDbType(dbTypeName);
-                    sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(3, @"paramList.Add(new DbParameter(""@{0}"", {1}) {{ SqlDbType = SqlDbType.{2} }});", row["ColumnName"], convertActionCode, sqlDbType));
+                    sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(3, @"paramList.Add(DBAccesser.DbInstance.BuildDbParameter(""@{0}"", {1}, DbType.{2}));", row["ColumnName"], convertActionCode, sqlDbType));
                 }
             }
             return sbl.ToString();
@@ -341,7 +347,7 @@
             sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(3, @"string strSql = @""{0}"";", BuildInsertSqlCode(schema, tableName)));
             sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(3, @"List<DbParameter> paramList = new List<DbParameter>();"));
             sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(0, BuildModelToDBCode(schema)));
-            sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(3, "int res = DBAccesser.DbInstance.ExecuteNonQuery(strSql, paramList.ToArray());"));
+            sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(3, "int res = DBAccesser.DbInstance.ExecuteNonQuery(strSql, CommandType.Text, paramList.ToArray());"));
             sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(3, "return res > 0 ; "));
             sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(2, "}"));
             return sbl.ToString();
@@ -354,8 +360,8 @@
             sbl.AppendFormat("INSERT INTO [{0}] (", tableName);
             foreach (DataRow row in schema.Rows)
             {
-                if (!(bool)row["IsIdentity"] && String.Compare(row["ColumnName"].ToString(), "timestamp", true) != 0)
-                    sbl.AppendFormat("[{0}], ", row["ColumnName"]);
+                //if (!(bool)row["IsIdentity"] && String.Compare(row["ColumnName"].ToString(), "timestamp", true) != 0)
+                sbl.AppendFormat("[{0}], ", row["ColumnName"]);
             }
             if (schema.Rows.Count > 0)
                 sbl = sbl.Remove(sbl.Length - 2, 2);
@@ -364,8 +370,8 @@
             sbl.Append("VALUES (");
             foreach (DataRow row in schema.Rows)
             {
-                if (!(bool)row["IsIdentity"] && String.Compare(row["ColumnName"].ToString(), "timestamp", true) != 0)
-                    sbl.AppendFormat("@{0}, ", row["ColumnName"]);
+                //if (!(bool)row["IsIdentity"] && String.Compare(row["ColumnName"].ToString(), "timestamp", true) != 0)
+                sbl.AppendFormat("@{0}, ", row["ColumnName"]);
             }
             if (schema.Rows.Count > 0)
                 sbl = sbl.Remove(sbl.Length - 2, 2);
@@ -378,14 +384,14 @@
 
             foreach (DataRow row in schema.Rows)
             {
-                if (!(bool)row["IsIdentity"] && String.Compare(row["ColumnName"].ToString(), "timestamp", true) != 0)
-                {
-                    string propertyName = CodeBuilderAssistant.GetPropertyName(row["ColumnName"].ToString());
-                    string dbTypeName = row["DataTypeName"].ToString();
-                    string convertActionCode = CodeBuilderAssistant.GetColumnConvertToDBCode(dbTypeName, propertyName);
-                    string sqlDbType = CodeBuilderAssistant.GetColumnSqlDbType(dbTypeName);
-                    sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(3, @"paramList.Add(new DbParameter(""@{0}"", {1}) {{ SqlDbType = SqlDbType.{2} }});", row["ColumnName"], convertActionCode, sqlDbType));
-                }
+                //if (!(bool)row["IsIdentity"] && String.Compare(row["ColumnName"].ToString(), "timestamp", true) != 0)
+                //{
+                string propertyName = CodeBuilderAssistant.GetPropertyName(row["ColumnName"].ToString());
+                string dbTypeName = row["DataTypeName"].ToString();
+                string convertActionCode = CodeBuilderAssistant.GetColumnConvertToDBCode(dbTypeName, propertyName);
+                string sqlDbType = CodeBuilderAssistant.GetColumnSqlDbType(dbTypeName);
+                sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(3, @"paramList.Add(DBAccesser.DbInstance.BuildDbParameter(""@{0}"", {1}, DbType.{2}));", row["ColumnName"], convertActionCode, sqlDbType));
+                //}
             }
             return sbl.ToString();
         }
@@ -398,7 +404,7 @@
             sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(3, @"string strSql = @""{0}"";", BuildDeleteByPrimaryKeySqlCode(schema, tableName)));
             sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(3, @"List<DbParameter> paramList = new List<DbParameter>();"));
             sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(0, BuildPrimaryKeyModelToDBCode(schema)));
-            sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(3, "int res = DBAccesser.DbInstance.ExecuteNonQuery(strSql, paramList.ToArray());"));
+            sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(3, "int res = DBAccesser.DbInstance.ExecuteNonQuery(strSql, CommandType.Text, paramList.ToArray());"));
             sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(3, "return res > 0 ; "));
             sbl.AppendLine(CodeBuilderAssistant.BuildCodeLine(2, "}"));
             return sbl.ToString();

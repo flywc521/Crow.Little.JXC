@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Crow.Little.DBHelper;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -10,7 +11,6 @@ namespace Crow.Little.CodeGeneratorLibrary
     {
         #region Field
         private static Dictionary<string, string> keyWordDict = new Dictionary<string, string>();
-        private static Dictionary<string, DBTypeMapping> dbTypeMappingDict = new Dictionary<string, DBTypeMapping>();
         private static CodeGenerateSetting setting = new CodeGenerateSetting();
         #endregion
         #region Property
@@ -18,333 +18,12 @@ namespace Crow.Little.CodeGeneratorLibrary
         #region Constructor
         static CodeBuilderAssistant()
         {
-            BuildDbTypeMappingDict();
             BuildKeyWordDict();
         }
         #endregion
         #region Event
         #endregion
         #region Method
-        #region 构建SqlServer数据库类型与系统类型的映射关系
-        /// <summary>
-        /// 在静态构造函数中构建各种DB数据类型对应的系统类型及转换方法的字典
-        /// </summary>
-        private static void BuildDbTypeMappingDict()
-        {
-            BuildBoolDbTypeMappingDict();
-            BuildIntDbTypeMappingDict();
-            BuildDateTimeDbTypeMappingDict();
-            BuildDecimalDbTypeMappingDict();
-            BuildStringDbTypeMappingDict();
-            BuildByteArrayDbTypeMappingDict();
-            BuildOtherDbTypeMappingDict();
-        }
-        #region 布尔
-        private static void BuildBoolDbTypeMappingDict()
-        {
-            //布尔
-            dbTypeMappingDict["bit"] = new DBTypeMapping()
-            {
-                DBType = "bit",
-                SystemType = "bool",
-                DefaultValue = "false",
-                ConvertFromDB = "reader.GetBoolean({0})",
-                ConvertToDB = "model.{0}",
-                SqlDbType = System.Data.SqlDbType.Bit,
-            };
-        }
-        #endregion
-        #region 整数
-        private static void BuildIntDbTypeMappingDict()
-        {
-            //整数
-            dbTypeMappingDict["tinyint"] = new DBTypeMapping()
-            {
-                DBType = "tinyint",
-                SystemType = "byte",
-                DefaultValue = "(byte)0",
-                ConvertFromDB = "reader.GetByte({0})",
-                ConvertToDB = "model.{0}",
-                SqlDbType = System.Data.SqlDbType.TinyInt,
-            };
-            dbTypeMappingDict["smallint"] = new DBTypeMapping()
-            {
-                DBType = "smallint",
-                SystemType = "short",
-                DefaultValue = "(short)0",
-                ConvertFromDB = "reader.GetInt16({0})",
-                ConvertToDB = "model.{0}",
-                SqlDbType = System.Data.SqlDbType.SmallInt,
-            };
-            dbTypeMappingDict["int"] = new DBTypeMapping()
-            {
-                DBType = "int",
-                SystemType = "int",
-                DefaultValue = "0",
-                ConvertFromDB = "reader.GetInt32({0})",
-                ConvertToDB = "model.{0}",
-                SqlDbType = System.Data.SqlDbType.Int,
-            };
-            dbTypeMappingDict["bigint"] = new DBTypeMapping()
-            {
-                DBType = "bigint",
-                SystemType = "long",
-                DefaultValue = "(long)0",
-                ConvertFromDB = "reader.GetInt64({0})",
-                ConvertToDB = "model.{0}",
-                SqlDbType = System.Data.SqlDbType.BigInt,
-            };
-        }
-        #endregion
-        #region 日期
-        private static void BuildDateTimeDbTypeMappingDict()
-        {
-            //日期时间
-            dbTypeMappingDict["date"] = new DBTypeMapping()
-            {
-                DBType = "date",
-                SystemType = "DateTime",
-                DefaultValue = "DateTime.MinValue",
-                ConvertFromDB = "reader.GetDateTime({0})",
-                ConvertToDB = "model.{0}",
-                SqlDbType = System.Data.SqlDbType.Date,
-            };
-            dbTypeMappingDict["datetime"] = new DBTypeMapping()
-            {
-                DBType = "datetime",
-                SystemType = "DateTime",
-                DefaultValue = "DateTime.MinValue",
-                ConvertFromDB = "reader.GetDateTime({0})",
-                ConvertToDB = "model.{0}",
-                SqlDbType = System.Data.SqlDbType.DateTime,
-            };
-            dbTypeMappingDict["datetime2"] = new DBTypeMapping()
-            {
-                DBType = "datetime2",
-                SystemType = "DateTime",
-                DefaultValue = "DateTime.MinValue",
-                ConvertFromDB = "reader.GetDateTime({0})",
-                ConvertToDB = "model.{0}",
-                SqlDbType = System.Data.SqlDbType.DateTime2,
-            };
-            dbTypeMappingDict["smalldatetime"] = new DBTypeMapping()
-            {
-                DBType = "smalldatetime",
-                SystemType = "DateTime",
-                DefaultValue = "DateTime.MinValue",
-                ConvertFromDB = "reader.GetDateTime({0})",
-                ConvertToDB = "model.{0}",
-                SqlDbType = System.Data.SqlDbType.SmallDateTime,
-            };
-            dbTypeMappingDict["datetimeoffset"] = new DBTypeMapping()
-            {
-                DBType = "datetimeoffset",
-                SystemType = "DateTimeOffset",
-                DefaultValue = "DateTimeOffset.MinValue",
-                ConvertFromDB = "reader.GetDateTimeOffset({0})",
-                ConvertToDB = "model.{0}",
-                SqlDbType = System.Data.SqlDbType.DateTimeOffset,
-            };
-            dbTypeMappingDict["time"] = new DBTypeMapping()
-            {
-                DBType = "time",
-                SystemType = "TimeSpan",
-                DefaultValue = "TimeSpan.MinValue",
-                ConvertFromDB = "reader.GetTimeSpan({0})",
-                ConvertToDB = "model.{0}",
-                SqlDbType = System.Data.SqlDbType.Time,
-            };
-        }
-        #endregion
-        #region 小数
-        private static void BuildDecimalDbTypeMappingDict()
-        {
-            //小数
-            dbTypeMappingDict["real"] = new DBTypeMapping()
-            {
-                DBType = "real",
-                SystemType = "float",
-                DefaultValue = "0",
-                ConvertFromDB = "reader.GetFloat({0})",
-                ConvertToDB = "model.{0}",
-                SqlDbType = System.Data.SqlDbType.Real,
-            };
-            dbTypeMappingDict["float"] = new DBTypeMapping()
-            {
-                DBType = "float",
-                SystemType = "double",
-                DefaultValue = "0",
-                ConvertFromDB = "reader.GetDouble({0})",
-                ConvertToDB = "model.{0}",
-                SqlDbType = System.Data.SqlDbType.Float,
-            };
-            dbTypeMappingDict["decimal"] = new DBTypeMapping()
-            {
-                DBType = "decimal",
-                SystemType = "decimal",
-                DefaultValue = "0",
-                ConvertFromDB = "reader.GetDecimal({0})",
-                ConvertToDB = "model.{0}",
-                SqlDbType = System.Data.SqlDbType.Decimal,
-            };
-            dbTypeMappingDict["money"] = new DBTypeMapping()
-            {
-                DBType = "money",
-                SystemType = "decimal",
-                DefaultValue = "0",
-                ConvertFromDB = "reader.GetDecimal({0})",
-                ConvertToDB = "model.{0}",
-                SqlDbType = System.Data.SqlDbType.Money,
-            };
-            dbTypeMappingDict["smallmoney"] = new DBTypeMapping()
-            {
-                DBType = "smallmoney",
-                SystemType = "decimal",
-                DefaultValue = "0",
-                ConvertFromDB = "reader.GetDecimal({0})",
-                ConvertToDB = "model.{0}",
-                SqlDbType = System.Data.SqlDbType.SmallMoney,
-            };
-        }
-        #endregion
-        #region 字符串
-        private static void BuildStringDbTypeMappingDict()
-        {
-            //字符串
-            dbTypeMappingDict["char"] = new DBTypeMapping()
-            {
-                DBType = "char",
-                SystemType = "string",
-                DefaultValue = "String.Empty",
-                ConvertFromDB = "reader.GetString({0})",
-                ConvertToDB = "model.{0}",
-                SqlDbType = System.Data.SqlDbType.Char,
-            };
-            dbTypeMappingDict["nchar"] = new DBTypeMapping()
-            {
-                DBType = "nchar",
-                SystemType = "string",
-                DefaultValue = "String.Empty",
-                ConvertFromDB = "reader.GetString({0})",
-                ConvertToDB = "model.{0}",
-                SqlDbType = System.Data.SqlDbType.NChar,
-            };
-            dbTypeMappingDict["ntext"] = new DBTypeMapping()
-            {
-                DBType = "ntext",
-                SystemType = "string",
-                DefaultValue = "String.Empty",
-                ConvertFromDB = "reader.GetString({0})",
-                ConvertToDB = "model.{0}",
-                SqlDbType = System.Data.SqlDbType.NText,
-            };
-            dbTypeMappingDict["nvarchar"] = new DBTypeMapping()
-            {
-                DBType = "nvarchar",
-                SystemType = "string",
-                DefaultValue = "String.Empty",
-                ConvertFromDB = "reader.GetString({0})",
-                ConvertToDB = "model.{0}",
-                SqlDbType = System.Data.SqlDbType.NVarChar,
-            };
-            dbTypeMappingDict["text"] = new DBTypeMapping()
-            {
-                DBType = "text",
-                SystemType = "string",
-                DefaultValue = "String.Empty",
-                ConvertFromDB = "reader.GetString({0})",
-                ConvertToDB = "model.{0}",
-                SqlDbType = System.Data.SqlDbType.Text,
-            };
-            dbTypeMappingDict["varchar"] = new DBTypeMapping()
-            {
-                DBType = "varchar",
-                SystemType = "string",
-                DefaultValue = "String.Empty",
-                ConvertFromDB = "reader.GetString({0})",
-                ConvertToDB = "model.{0}",
-                SqlDbType = System.Data.SqlDbType.VarChar,
-            };
-        }
-        #endregion
-        #region Byte数组
-        private static void BuildByteArrayDbTypeMappingDict()
-        {
-            //二进制数组
-            dbTypeMappingDict["binary"] = new DBTypeMapping()
-            {
-                DBType = "binary",
-                SystemType = "byte[]",
-                DefaultValue = "null",
-                ConvertFromDB = "(byte[])reader.GetValue({0})",
-                ConvertToDB = "model.{0}",
-                SqlDbType = System.Data.SqlDbType.Binary,
-            };
-            dbTypeMappingDict["timestamp"] = new DBTypeMapping()
-            {
-                DBType = "timestamp",
-                SystemType = "byte[]",
-                DefaultValue = "null",
-                ConvertFromDB = "(byte[])reader.GetValue({0})",
-                ConvertToDB = "model.{0}",
-                SqlDbType = System.Data.SqlDbType.Timestamp,
-            };
-            dbTypeMappingDict["varbinary"] = new DBTypeMapping()
-            {
-                DBType = "varbinary",
-                SystemType = "byte[]",
-                DefaultValue = "null",
-                ConvertFromDB = "(byte[])reader.GetValue({0})",
-                ConvertToDB = "model.{0}",
-                SqlDbType = System.Data.SqlDbType.VarBinary,
-            };
-            dbTypeMappingDict["image"] = new DBTypeMapping()
-            {
-                DBType = "image",
-                SystemType = "string",
-                DefaultValue = "null",
-                ConvertFromDB = "Convert.ToBase64String((byte[])reader.GetValue({0}))",
-                ConvertToDB = "(model.{0} == null ? null : Convert.FromBase64String(model.{0}))",
-                SqlDbType = System.Data.SqlDbType.Image,
-            };
-        }
-        #endregion
-        #region 其它
-        private static void BuildOtherDbTypeMappingDict()
-        {
-            //Xml
-            dbTypeMappingDict["xml"] = new DBTypeMapping()
-            {
-                DBType = "xml",
-                SystemType = "XmlDocument",
-                DefaultValue = "new XmlDocument()",
-                ConvertFromDB = "DataAccesser.ConvertToXmlDocument(reader.GetString({0}))",
-                ConvertToDB = "DataAccesser.ConvertFromXmlDocument(model.{0})",
-                SqlDbType = System.Data.SqlDbType.Xml,
-            };
-            //Guid
-            dbTypeMappingDict["uniqueidentifier"] = new DBTypeMapping()
-            {
-                DBType = "uniqueidentifier",
-                SystemType = "string",
-                DefaultValue = "String.Empty",
-                ConvertFromDB = "reader.GetGuid({0}).ToString()",
-                ConvertToDB = "CommonConvertor.TryToConverToGuid(model.{0})",
-                SqlDbType = System.Data.SqlDbType.UniqueIdentifier,
-            };
-            //object(包括sql_variant等在内的未涉及类型)
-            dbTypeMappingDict["object"] = new DBTypeMapping()
-            {
-                DBType = "object",
-                SystemType = "object",
-                DefaultValue = "null",
-                ConvertFromDB = "reader.GetValue({0})",
-                ConvertToDB = "model.{0}",
-                SqlDbType = System.Data.SqlDbType.Variant,
-            };
-        }
-        #endregion
-        #endregion
         #region 构建C#系统关键字映射
         private static void BuildKeyWordDict()
         {
@@ -475,37 +154,28 @@ namespace Crow.Little.CodeGeneratorLibrary
         /// <returns></returns>
         internal static string GetColumnType(string dataTypeName)
         {
-            DBTypeMapping mapping = GetColumnDataTypeMapping(dataTypeName);
+            DBTypeMapping mapping = DBAccesser.DbInstance.GetColumnDataTypeMapping(dataTypeName);
             return mapping.SystemType;
         }
         internal static string GetColumnDefaultValue(string dataTypeName)
         {
-            DBTypeMapping mapping = GetColumnDataTypeMapping(dataTypeName);
+            DBTypeMapping mapping = DBAccesser.DbInstance.GetColumnDataTypeMapping(dataTypeName);
             return mapping.DefaultValue;
         }
         internal static string GetColumnSqlDbType(string dataTypeName)
         {
-            DBTypeMapping mapping = GetColumnDataTypeMapping(dataTypeName);
-            return mapping.SqlDbType.ToString();
+            DBTypeMapping mapping = DBAccesser.DbInstance.GetColumnDataTypeMapping(dataTypeName);
+            return mapping.DbType.ToString();
         }
         internal static string GetColumnConvertFromDBCode(string dataTypeName, int idx)
         {
-            DBTypeMapping mapping = GetColumnDataTypeMapping(dataTypeName);
+            DBTypeMapping mapping = DBAccesser.DbInstance.GetColumnDataTypeMapping(dataTypeName);
             return String.Format(mapping.ConvertFromDB, idx);
         }
         internal static string GetColumnConvertToDBCode(string dataTypeName, string propertyName)
         {
-            DBTypeMapping mapping = GetColumnDataTypeMapping(dataTypeName);
+            DBTypeMapping mapping = DBAccesser.DbInstance.GetColumnDataTypeMapping(dataTypeName);
             return String.Format(mapping.ConvertToDB, propertyName);
-        }
-        internal static DBTypeMapping GetColumnDataTypeMapping(string dataTypeName)
-        {
-            DBTypeMapping mapping = new DBTypeMapping();
-            if (dbTypeMappingDict.ContainsKey(dataTypeName))
-                mapping = dbTypeMappingDict[dataTypeName];
-            else
-                mapping = dbTypeMappingDict["object"];
-            return mapping;
         }
         /// <summary>
         /// 按数量生成Tab字串

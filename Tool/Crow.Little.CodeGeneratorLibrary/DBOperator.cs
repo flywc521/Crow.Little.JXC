@@ -81,7 +81,13 @@
         }
         public static DBDescription LoadDBDescription()
         {
-            string strSql = @"
+            string strSql = "";
+            switch (currentProvider)
+            {
+                case DbProvider.sqlite: break;
+                case DbProvider.accdb: break;
+                case DbProvider.mssql:
+                default: strSql = @"
 SELECT 
     [TableName] = OBJECT_NAME(c.object_id), 
     [ColumnName] = c.name, 
@@ -91,21 +97,26 @@ LEFT OUTER JOIN sys.extended_properties ex ON
     ex.major_id = c.object_id AND ex.minor_id = c.column_id AND ex.name = 'MS_Description' 
 WHERE OBJECTPROPERTY(c.object_id, 'IsMsShipped')=0 /* AND OBJECT_NAME(c.object_id) = 'your_table' */
 ORDER BY OBJECT_NAME(c.object_id), c.column_id";
+                    break;
+            }
 
             DBDescription dbDesc = new DBDescription();
-            using (DbDataReader reader = DBAccesser.DbInstance.ExecuteReader(strSql))
-            {
-                while (reader.Read())
+            if (!String.IsNullOrEmpty(strSql))
+            {                
+                using (DbDataReader reader = DBAccesser.DbInstance.ExecuteReader(strSql))
                 {
-                    string tableName = reader.IsDBNull(0) ? String.Empty : reader.GetString(0);
-                    string colName = reader.IsDBNull(1) ? String.Empty : reader.GetString(1);
-                    string colDescription = reader.IsDBNull(2) ? String.Empty : reader.GetString(2);
-
-                    if (!String.IsNullOrEmpty(tableName))
+                    while (reader.Read())
                     {
-                        TableDescription tableDesc = dbDesc.GetOrCreateTableDescription(tableName);
-                        if (!String.IsNullOrEmpty(colName))
-                            tableDesc.AddColumnDescription(colName, colDescription);
+                        string tableName = reader.IsDBNull(0) ? String.Empty : reader.GetString(0);
+                        string colName = reader.IsDBNull(1) ? String.Empty : reader.GetString(1);
+                        string colDescription = reader.IsDBNull(2) ? String.Empty : reader.GetString(2);
+
+                        if (!String.IsNullOrEmpty(tableName))
+                        {
+                            TableDescription tableDesc = dbDesc.GetOrCreateTableDescription(tableName);
+                            if (!String.IsNullOrEmpty(colName))
+                                tableDesc.AddColumnDescription(colName, colDescription);
+                        }
                     }
                 }
             }

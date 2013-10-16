@@ -115,7 +115,7 @@
             this.dgvProject.Size = new System.Drawing.Size(529, 298);
             this.dgvProject.TabIndex = 2;
             this.dgvProject.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvProject_CellContentClick);
-            this.dgvProject.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvProject_CellContentDoubleClick);
+            this.dgvProject.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvProject_CellDoubleClick);
             // 
             // colGenerate
             // 

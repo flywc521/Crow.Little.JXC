@@ -82,9 +82,9 @@
                 }
             }
         }
-        private void dgvProject_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void dgvProject_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (String.Compare(this.dgvProject.Columns[e.ColumnIndex].Name, "colProjectName", true) == 0 && e.RowIndex >= 0)
+            if (String.Compare(this.dgvProject.Columns[e.ColumnIndex].Name, "colGenerate", true) != 0 && e.RowIndex >= 0)
             {
                 string name = this.dgvProject.Rows[e.RowIndex].Cells["colProjectName"].Value.ToString();
                 CodeGenerateSetting setting = this.settingList.Where(s => String.Compare(s.Name, name, true) == 0).FirstOrDefault();
@@ -192,5 +192,7 @@
             }
         }
         #endregion
+
+
     }
 }

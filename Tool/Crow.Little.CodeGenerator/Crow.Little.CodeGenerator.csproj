@@ -51,6 +51,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="dbConfig\CtrlAccessConfig.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="dbConfig\CtrlAccessConfig.Designer.cs">
+      <DependentUpon>CtrlAccessConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="dbConfig\CtrlDbConfig.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="dbConfig\CtrlSqliteConfig.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="dbConfig\CtrlSqliteConfig.Designer.cs">
+      <DependentUpon>CtrlSqliteConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="dbConfig\CtrlSqlServerConfig.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="dbConfig\CtrlSqlServerConfig.Designer.cs">
+      <DependentUpon>CtrlSqlServerConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="dbConfig\DbSettingItem.cs" />
     <Compile Include="FormConfig.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -83,6 +105,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="dbConfig\CtrlAccessConfig.resx">
+      <DependentUpon>CtrlAccessConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="dbConfig\CtrlSqliteConfig.resx">
+      <DependentUpon>CtrlSqliteConfig.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormConfig.resx">
       <DependentUpon>FormConfig.cs</DependentUpon>
     </EmbeddedResource>

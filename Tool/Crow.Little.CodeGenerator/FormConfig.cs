@@ -1,4 +1,5 @@
-﻿using Crow.Little.CodeGeneratorLibrary;
+﻿using Crow.Little.CodeGenerator.dbConfig;
+using Crow.Little.CodeGeneratorLibrary;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -62,37 +63,6 @@ namespace Crow.Little.CodeGenerator
             if (!String.IsNullOrEmpty(defaultNameSpace))
                 this.tbxDALNameSpace.Text = defaultNameSpace;
         }
-        private void cbxDB_DropDown(object sender, EventArgs e)
-        {
-            this.TryToBindDataTables();
-        }
-        private void btnConnect_Click(object sender, EventArgs e)
-        {
-            string provider = this.cbxProvider.SelectedValue.ToString();
-            string server = this.tbxServer.Text;
-            int dbIndex = this.cbxDB.SelectedIndex;
-            string uid = this.tbxUser.Text;
-            string pwd = this.tbxPassword.Text;
-
-            if (!String.IsNullOrEmpty(server) && dbIndex >= 0 && !String.IsNullOrEmpty(uid))
-            {
-                string db = this.cbxDB.Items[dbIndex].ToString();
-                //string dbConnection = BuildConnectionString(server, db, uid, pwd);
-
-                //DBOperator.InitConnection(dbConnection);
-                //DBOperator.InitConnection("sqlite", "", @"Data\jxcData.db", "", "");
-                DBOperator.InitConnection(Convert.ToInt32(provider), server, db, uid, pwd);
-                try
-                {
-                    List<string> tableNameList = DBOperator.LoadTableNames();
-                    MessageBox.Show("数据库连接成功!", "消息提示", MessageBoxButtons.OK);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(String.Format("数据库连接失败:{0}", ex.Message), "消息提示", MessageBoxButtons.OK);
-                }
-            }
-        }
         private void btnSave_Click(object sender, EventArgs e)
         {
             bool successed = true;
@@ -138,6 +108,22 @@ namespace Crow.Little.CodeGenerator
         {
             this.Close();
         }
+        private void cbxProvider_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.pnlDb.Controls.Clear();
+            if (this.cbxProvider.Text == "sqlite")
+            {
+                this.pnlDb.Controls.Add(new CtrlSqliteConfig(2));
+            }
+            else if (this.cbxProvider.Text == "accdb")
+            {
+                this.pnlDb.Controls.Add(new CtrlAccessConfig(1));
+            }
+            else if (this.cbxProvider.Text == "mssql")
+            {
+                this.pnlDb.Controls.Add(new CtrlSqlServerConfig(3));
+            }
+        }
         #endregion
         #region Custom Method
         private void InitControlsForSetting()
@@ -174,17 +160,21 @@ namespace Crow.Little.CodeGenerator
                 }
                 if (this.Setting.DB != null)
                 {
-                    this.cbxProvider.SelectedValue = this.Setting.DB.Provider;
-                    this.tbxServer.Text = this.Setting.DB.Server;
-                    this.tbxUser.Text = this.Setting.DB.User;
-                    this.tbxPassword.Text = this.Setting.DB.Password;
-
-                    this.TryToBindDataTables();
-                    foreach (var tableName in this.cbxDB.Items)
+                    DbSettingItem dbSetting = new DbSettingItem()
                     {
-                        if (String.Compare(tableName.ToString(), this.Setting.DB.DB, true) == 0)
+                        Provider = this.Setting.DB.Provider,
+                        Server = this.Setting.DB.Server,
+                        Database = this.Setting.DB.DB,
+                        UID = this.Setting.DB.User,
+                        PWD = this.Setting.DB.Password,
+                    };
+
+                    foreach (Control ctrl in this.pnlDb.Controls)
+                    {
+                        if (ctrl is CtrlDbConfig)
                         {
-                            this.cbxDB.SelectedItem = tableName;
+                            CtrlDbConfig dbConfig = (CtrlDbConfig)ctrl;
+                            dbConfig.InitDbSetting(dbSetting);
                             break;
                         }
                     }
@@ -217,10 +207,6 @@ namespace Crow.Little.CodeGenerator
                 tbxPath.Text = ofd.FileName;
             }
         }
-        private string BuildConnectionString(string server, string db, string uid, string pwd)
-        {
-            return String.Format("Data Source={0};initial catalog={1};user id={2};password={3};", server, db, uid, pwd);
-        }
         private string TryToGetDefaultNameSpaceForProject(string csprojPath)
         {
             string nameSpace = String.Empty;
@@ -239,38 +225,6 @@ namespace Crow.Little.CodeGenerator
             }
             return nameSpace;
         }
-        private void TryToBindDataTables()
-        {
-            string provider = this.cbxProvider.SelectedValue.ToString();
-            string server = this.tbxServer.Text;
-            int dbIndex = this.cbxDB.SelectedIndex;//@"Data\jxcData.db"
-            string uid = this.tbxUser.Text;//""
-            string pwd = this.tbxPassword.Text;//""
-
-            if (!String.IsNullOrEmpty(server) && !String.IsNullOrEmpty(uid))
-            {
-                //string masterConnection = BuildConnectionString(server, "master", uid, pwd);
-                try
-                {
-                    string db = this.cbxDB.Items[dbIndex].ToString();
-                    //DBOperator.InitConnection(masterConnection);
-                    DBOperator.InitConnection(Convert.ToInt32(provider), server, db, uid, pwd);
-                    List<string> dbNameList = DBOperator.LoadDBNames();
-
-                    this.cbxDB.Items.Clear();
-                    foreach (string dbName in dbNameList)
-                    {
-                        this.cbxDB.Items.Add(dbName);
-                    }
-                    if (this.cbxDB.Items.Count > 0)
-                        this.cbxDB.SelectedIndex = 0;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(String.Format("未能成功连接数据库,失败原因:{0}", ex.Message), "消息提示", MessageBoxButtons.OK);
-                }
-            }
-        }
         private CodeGenerateSetting BuildSetting()
         {
             CodeGenerateSetting setting = new CodeGenerateSetting();
@@ -281,14 +235,22 @@ namespace Crow.Little.CodeGenerator
         private DBSetting BuildDBSetting()
         {
             DBSetting setting = new DBSetting();
-            setting.Server = this.tbxServer.Text.Trim();
-
-            int dbIndex = this.cbxDB.SelectedIndex;
-            if (dbIndex >= 0)
-                setting.DB = this.cbxDB.Items[dbIndex].ToString();
-
-            setting.User = this.tbxUser.Text.Trim();
-            setting.Password = this.tbxPassword.Text.Trim();
+            foreach (Control ctrl in this.pnlDb.Controls)
+            {
+                if (ctrl is CtrlDbConfig)
+                {
+                    CtrlDbConfig dbConfig = (CtrlDbConfig)ctrl;
+                    setting = new DBSetting()
+                    {
+                        Provider = dbConfig.DBSetting.Provider,
+                        Server = dbConfig.DBSetting.Server,
+                        DB = dbConfig.DBSetting.Database,
+                        User = dbConfig.DBSetting.UID,
+                        Password = dbConfig.DBSetting.PWD,
+                    };
+                    break;
+                }
+            }
             return setting;
         }
         private SolutionSetting BuildSolutionSetting()
@@ -325,11 +287,6 @@ namespace Crow.Little.CodeGenerator
             return setting;
         }
         #endregion
-
-        private void tpgDBSetting_Click(object sender, EventArgs e)
-        {
-
-        }
         #endregion
     }
 }

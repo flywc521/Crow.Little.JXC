@@ -78,12 +78,10 @@
             }
             return existedTableNameList;
         }
-
         public static List<Tuple<int, string>> GetProviders()
         {
             return Common.CommonEnumHelper.GetSeqEnumDisplayItems(typeof(DbProvider));
         }
-
         private void GenerateCodeFile(string tableName, DataTable schema, TableDescription tableDesc, string nameSpace, List<string> classAttrs, string className, List<string> geneatedFiles)
         {
             StringBuilder sbl = new StringBuilder(256);

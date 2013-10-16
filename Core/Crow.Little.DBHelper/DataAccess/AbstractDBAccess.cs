@@ -16,6 +16,8 @@ namespace Crow.Little.DBHelper
         private string dbName = String.Empty;
         private string uid = String.Empty;
         private string pwd = String.Empty;
+
+        protected Dictionary<string, DBTypeMapping> dbTypeMappingDict = new Dictionary<string, DBTypeMapping>();
         #endregion
 
         #region Property
@@ -67,6 +69,8 @@ namespace Crow.Little.DBHelper
             dbName = _db;
             uid = _uid;
             pwd = _pwd;
+
+            BuildDbTypeMappingDict();
         }
         #endregion
 
@@ -74,8 +78,43 @@ namespace Crow.Little.DBHelper
         #endregion
 
         #region Method
+        #region 构建数据库类型与系统类型的映射关系
+        /// <summary>
+        /// 在静态构造函数中构建各种DB数据类型对应的系统类型及转换方法的字典
+        /// </summary>
+        private void BuildDbTypeMappingDict()
+        {
+            BuildBoolDbTypeMappingDict();
+            BuildIntDbTypeMappingDict();
+            BuildDateTimeDbTypeMappingDict();
+            BuildDecimalDbTypeMappingDict();
+            BuildStringDbTypeMappingDict();
+            BuildByteArrayDbTypeMappingDict();
+            BuildOtherDbTypeMappingDict();
+        }
+        protected abstract void BuildBoolDbTypeMappingDict();
+        protected abstract void BuildIntDbTypeMappingDict();
+        protected abstract void BuildDateTimeDbTypeMappingDict();
+        protected abstract void BuildDecimalDbTypeMappingDict();
+        protected abstract void BuildStringDbTypeMappingDict();
+        protected abstract void BuildByteArrayDbTypeMappingDict();
+        protected abstract void BuildOtherDbTypeMappingDict();
+
+        public DBTypeMapping GetColumnDataTypeMapping(string dataTypeName)
+        {
+            dataTypeName = dataTypeName.ToLower().Trim();
+
+            DBTypeMapping mapping = new DBTypeMapping();
+            if (dbTypeMappingDict.ContainsKey(dataTypeName))
+                mapping = dbTypeMappingDict[dataTypeName];
+            else
+                mapping = dbTypeMappingDict["object"];
+            return mapping;
+        }
+        #endregion
+
         #region Common Method
-        public abstract DbParameter BuildDbParameter(string paraName, object paraValue);
+        public abstract DbParameter BuildDbParameter(string paraName, object paraValue, DbType dbtype = DbType.String);
 
         protected void AttachParameters(DbCommand command, DbParameter[] commandParameters)
         {

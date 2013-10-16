@@ -70,19 +70,11 @@
             this.tbxModelPath = new System.Windows.Forms.TextBox();
             this.tpgDBSetting = new System.Windows.Forms.TabPage();
             this.gbxDBConnection = new System.Windows.Forms.GroupBox();
-            this.btnConnect = new System.Windows.Forms.Button();
-            this.cbxDB = new System.Windows.Forms.ComboBox();
-            this.tbxPassword = new System.Windows.Forms.TextBox();
-            this.lblDB = new System.Windows.Forms.Label();
-            this.lblPassword = new System.Windows.Forms.Label();
-            this.tbxUser = new System.Windows.Forms.TextBox();
-            this.lblUser = new System.Windows.Forms.Label();
-            this.tbxServer = new System.Windows.Forms.TextBox();
-            this.lblServer = new System.Windows.Forms.Label();
+            this.cbxProvider = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.cbxProvider = new System.Windows.Forms.ComboBox();
+            this.pnlDb = new System.Windows.Forms.Panel();
             this.tclSetting.SuspendLayout();
             this.tpgProjectSetting.SuspendLayout();
             this.gbxDALSetting.SuspendLayout();
@@ -490,21 +482,12 @@
             this.tpgDBSetting.TabIndex = 0;
             this.tpgDBSetting.Text = "数据库设置";
             this.tpgDBSetting.UseVisualStyleBackColor = true;
-            this.tpgDBSetting.Click += new System.EventHandler(this.tpgDBSetting_Click);
             // 
             // gbxDBConnection
             // 
+            this.gbxDBConnection.Controls.Add(this.pnlDb);
             this.gbxDBConnection.Controls.Add(this.cbxProvider);
             this.gbxDBConnection.Controls.Add(this.label1);
-            this.gbxDBConnection.Controls.Add(this.btnConnect);
-            this.gbxDBConnection.Controls.Add(this.cbxDB);
-            this.gbxDBConnection.Controls.Add(this.tbxPassword);
-            this.gbxDBConnection.Controls.Add(this.lblDB);
-            this.gbxDBConnection.Controls.Add(this.lblPassword);
-            this.gbxDBConnection.Controls.Add(this.tbxUser);
-            this.gbxDBConnection.Controls.Add(this.lblUser);
-            this.gbxDBConnection.Controls.Add(this.tbxServer);
-            this.gbxDBConnection.Controls.Add(this.lblServer);
             this.gbxDBConnection.Dock = System.Windows.Forms.DockStyle.Top;
             this.gbxDBConnection.Location = new System.Drawing.Point(3, 3);
             this.gbxDBConnection.Name = "gbxDBConnection";
@@ -513,82 +496,23 @@
             this.gbxDBConnection.TabStop = false;
             this.gbxDBConnection.Text = "数据库连接";
             // 
-            // btnConnect
+            // cbxProvider
             // 
-            this.btnConnect.Location = new System.Drawing.Point(376, 98);
-            this.btnConnect.Name = "btnConnect";
-            this.btnConnect.Size = new System.Drawing.Size(75, 23);
-            this.btnConnect.TabIndex = 9;
-            this.btnConnect.Text = "测试连接";
-            this.btnConnect.UseVisualStyleBackColor = true;
-            this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
+            this.cbxProvider.FormattingEnabled = true;
+            this.cbxProvider.Location = new System.Drawing.Point(73, 19);
+            this.cbxProvider.Name = "cbxProvider";
+            this.cbxProvider.Size = new System.Drawing.Size(297, 20);
+            this.cbxProvider.TabIndex = 11;
+            this.cbxProvider.SelectedIndexChanged += new System.EventHandler(this.cbxProvider_SelectedIndexChanged);
             // 
-            // cbxDB
+            // label1
             // 
-            this.cbxDB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxDB.FormattingEnabled = true;
-            this.cbxDB.Location = new System.Drawing.Point(60, 100);
-            this.cbxDB.Name = "cbxDB";
-            this.cbxDB.Size = new System.Drawing.Size(310, 20);
-            this.cbxDB.TabIndex = 8;
-            this.cbxDB.DropDown += new System.EventHandler(this.cbxDB_DropDown);
-            // 
-            // tbxPassword
-            // 
-            this.tbxPassword.Location = new System.Drawing.Point(254, 70);
-            this.tbxPassword.Name = "tbxPassword";
-            this.tbxPassword.Size = new System.Drawing.Size(116, 21);
-            this.tbxPassword.TabIndex = 7;
-            // 
-            // lblDB
-            // 
-            this.lblDB.AutoSize = true;
-            this.lblDB.Location = new System.Drawing.Point(6, 100);
-            this.lblDB.Name = "lblDB";
-            this.lblDB.Size = new System.Drawing.Size(47, 12);
-            this.lblDB.TabIndex = 2;
-            this.lblDB.Text = "数据库:";
-            // 
-            // lblPassword
-            // 
-            this.lblPassword.AutoSize = true;
-            this.lblPassword.Location = new System.Drawing.Point(193, 73);
-            this.lblPassword.Name = "lblPassword";
-            this.lblPassword.Size = new System.Drawing.Size(41, 12);
-            this.lblPassword.TabIndex = 6;
-            this.lblPassword.Text = "密 码:";
-            // 
-            // tbxUser
-            // 
-            this.tbxUser.Location = new System.Drawing.Point(72, 70);
-            this.tbxUser.Name = "tbxUser";
-            this.tbxUser.Size = new System.Drawing.Size(111, 21);
-            this.tbxUser.TabIndex = 5;
-            // 
-            // lblUser
-            // 
-            this.lblUser.AutoSize = true;
-            this.lblUser.Location = new System.Drawing.Point(6, 73);
-            this.lblUser.Name = "lblUser";
-            this.lblUser.Size = new System.Drawing.Size(47, 12);
-            this.lblUser.TabIndex = 4;
-            this.lblUser.Text = "用户名:";
-            // 
-            // tbxServer
-            // 
-            this.tbxServer.Location = new System.Drawing.Point(72, 43);
-            this.tbxServer.Name = "tbxServer";
-            this.tbxServer.Size = new System.Drawing.Size(298, 21);
-            this.tbxServer.TabIndex = 1;
-            // 
-            // lblServer
-            // 
-            this.lblServer.AutoSize = true;
-            this.lblServer.Location = new System.Drawing.Point(7, 46);
-            this.lblServer.Name = "lblServer";
-            this.lblServer.Size = new System.Drawing.Size(47, 12);
-            this.lblServer.TabIndex = 0;
-            this.lblServer.Text = "服务器:";
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(7, 19);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(59, 12);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "Provider:";
             // 
             // btnSave
             // 
@@ -610,22 +534,13 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // label1
+            // pnlDb
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(7, 19);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(59, 12);
-            this.label1.TabIndex = 10;
-            this.label1.Text = "Provider:";
-            // 
-            // cbxProvider
-            // 
-            this.cbxProvider.FormattingEnabled = true;
-            this.cbxProvider.Location = new System.Drawing.Point(73, 19);
-            this.cbxProvider.Name = "cbxProvider";
-            this.cbxProvider.Size = new System.Drawing.Size(297, 20);
-            this.cbxProvider.TabIndex = 11;
+            this.pnlDb.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pnlDb.Location = new System.Drawing.Point(3, 43);
+            this.pnlDb.Name = "pnlDb";
+            this.pnlDb.Size = new System.Drawing.Size(451, 86);
+            this.pnlDb.TabIndex = 12;
             // 
             // FormConfig
             // 
@@ -662,15 +577,6 @@
         private System.Windows.Forms.TabPage tpgDBSetting;
         private System.Windows.Forms.TabPage tpgProjectSetting;
         private System.Windows.Forms.GroupBox gbxDBConnection;
-        private System.Windows.Forms.Button btnConnect;
-        private System.Windows.Forms.ComboBox cbxDB;
-        private System.Windows.Forms.TextBox tbxPassword;
-        private System.Windows.Forms.Label lblDB;
-        private System.Windows.Forms.Label lblPassword;
-        private System.Windows.Forms.TextBox tbxUser;
-        private System.Windows.Forms.Label lblUser;
-        private System.Windows.Forms.TextBox tbxServer;
-        private System.Windows.Forms.Label lblServer;
         private System.Windows.Forms.GroupBox gbxPathSetting;
         private System.Windows.Forms.TextBox tbxSlnPath;
         private System.Windows.Forms.Button btnDALBrower;
@@ -712,5 +618,6 @@
         private System.Windows.Forms.Label lblModel;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cbxProvider;
+        private System.Windows.Forms.Panel pnlDb;
     }
 }
