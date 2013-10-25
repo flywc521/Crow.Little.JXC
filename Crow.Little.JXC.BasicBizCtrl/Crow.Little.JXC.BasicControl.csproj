@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9681D60D-DA56-47EE-B3DB-3DA7DFB6C9BC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Crow.Little.JXC.BasicControl</RootNamespace>
+    <AssemblyName>Crow.Little.JXC.BasicControl</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Model\JXC\Broken\Broken.cs" />
+    <Compile Include="DataAccess\JXC\Broken\BrokenDataAccess.cs" />
+    <Compile Include="Model\JXC\Broken\BrokenDetail.cs" />
+    <Compile Include="DataAccess\JXC\Broken\BrokenDetailDataAccess.cs" />
+    <Compile Include="Model\Commodity\Commodity.cs" />
+    <Compile Include="DataAccess\Commodity\CommodityDataAccess.cs" />
+    <Compile Include="Model\Member\Customer.cs" />
+    <Compile Include="DataAccess\Member\CustomerDataAccess.cs" />
+    <Compile Include="Model\Member\CustomerSomatotype.cs" />
+    <Compile Include="DataAccess\Member\CustomerSomatotypeDataAccess.cs" />
+    <Compile Include="Model\Member\Department.cs" />
+    <Compile Include="DataAccess\Member\DepartmentDataAccess.cs" />
+    <Compile Include="Model\Dict\DictBrand.cs" />
+    <Compile Include="DataAccess\Dict\DictBrandDataAccess.cs" />
+    <Compile Include="Model\Dict\DictColor.cs" />
+    <Compile Include="DataAccess\Dict\DictColorDataAccess.cs" />
+    <Compile Include="Model\Dict\DictMaterial.cs" />
+    <Compile Include="DataAccess\Dict\DictMaterialDataAccess.cs" />
+    <Compile Include="Model\Dict\DictSize.cs" />
+    <Compile Include="DataAccess\Dict\DictSizeDataAccess.cs" />
+    <Compile Include="Model\Dict\DictStyle.cs" />
+    <Compile Include="DataAccess\Dict\DictStyleDataAccess.cs" />
+    <Compile Include="Model\Dict\DictTag.cs" />
+    <Compile Include="DataAccess\Dict\DictTagDataAccess.cs" />
+    <Compile Include="Model\Dict\DictType.cs" />
+    <Compile Include="DataAccess\Dict\DictTypeDataAccess.cs" />
+    <Compile Include="Model\Member\Employee.cs" />
+    <Compile Include="DataAccess\Member\EmployeeDataAccess.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Model\JXC\Purchase\Purchase.cs" />
+    <Compile Include="Model\JXC\Purchase\PurchaseAdded.cs" />
+    <Compile Include="DataAccess\JXC\Purchase\PurchaseAddedDataAccess.cs" />
+    <Compile Include="Model\JXC\Purchase\PurchaseBooking.cs" />
+    <Compile Include="DataAccess\JXC\Purchase\PurchaseBookingDataAccess.cs" />
+    <Compile Include="DataAccess\JXC\Purchase\PurchaseDataAccess.cs" />
+    <Compile Include="Model\JXC\Purchase\PurchaseExchange.cs" />
+    <Compile Include="DataAccess\JXC\Purchase\PurchaseExchangeDataAccess.cs" />
+    <Compile Include="Model\JXC\Purchase\PurchaseExchangeFrom.cs" />
+    <Compile Include="DataAccess\JXC\Purchase\PurchaseExchangeFromDataAccess.cs" />
+    <Compile Include="Model\JXC\Purchase\PurchaseExchangeTo.cs" />
+    <Compile Include="DataAccess\JXC\Purchase\PurchaseExchangeToDataAccess.cs" />
+    <Compile Include="Model\JXC\Purchase\PurchaseNormal.cs" />
+    <Compile Include="DataAccess\JXC\Purchase\PurchaseNormalDataAccess.cs" />
+    <Compile Include="Model\JXC\Purchase\PurchaseReturned.cs" />
+    <Compile Include="DataAccess\JXC\Purchase\PurchaseReturnedDataAccess.cs" />
+    <Compile Include="Model\JXC\Repertory\Repertory.cs" />
+    <Compile Include="DataAccess\JXC\Repertory\RepertoryDataAccess.cs" />
+    <Compile Include="Model\JXC\Sale\Sale.cs" />
+    <Compile Include="Model\JXC\Sale\SaleBooking.cs" />
+    <Compile Include="DataAccess\JXC\Sale\SaleBookingDataAccess.cs" />
+    <Compile Include="DataAccess\JXC\Sale\SaleDataAccess.cs" />
+    <Compile Include="Model\JXC\Sale\SaleExchange.cs" />
+    <Compile Include="DataAccess\JXC\Sale\SaleExchangeDataAccess.cs" />
+    <Compile Include="Model\JXC\Sale\SaleExchangeFrom.cs" />
+    <Compile Include="DataAccess\JXC\Sale\SaleExchangeFromDataAccess.cs" />
+    <Compile Include="Model\JXC\Sale\SaleExchangeTo.cs" />
+    <Compile Include="DataAccess\JXC\Sale\SaleExchangeToDataAccess.cs" />
+    <Compile Include="Model\JXC\Sale\SaleNormal.cs" />
+    <Compile Include="DataAccess\JXC\Sale\SaleNormalDataAccess.cs" />
+    <Compile Include="Model\JXC\Sale\SaleReturned.cs" />
+    <Compile Include="DataAccess\JXC\Sale\SaleReturnedDataAccess.cs" />
+    <Compile Include="Model\Member\Supplier.cs" />
+    <Compile Include="DataAccess\Member\SupplierDataAccess.cs" />
+    <Compile Include="Model\Tags\TagsForCommodity.cs" />
+    <Compile Include="DataAccess\Tags\TagsForCommodityDataAccess.cs" />
+    <Compile Include="Model\Tags\TagsForCustomer.cs" />
+    <Compile Include="DataAccess\Tags\TagsForCustomerDataAccess.cs" />
+    <Compile Include="Model\Tags\TagsForSupplier.cs" />
+    <Compile Include="DataAccess\Tags\TagsForSupplierDataAccess.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Control\Crow.Little.CommonControl\Crow.Little.CommonControl.csproj">
+      <Project>{152c5599-9a3d-4e7a-b12c-21741ca2ac76}</Project>
+      <Name>Crow.Little.CommonControl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Core\Crow.Little.Common\Crow.Little.Common.csproj">
+      <Project>{1faf7380-a1a0-4a0b-867b-4e62a1c28168}</Project>
+      <Name>Crow.Little.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Core\Crow.Little.DBHelper\Crow.Little.DBHelper.csproj">
+      <Project>{edd0b4e9-6162-4ab3-ac37-72b6c8f33290}</Project>
+      <Name>Crow.Little.DBHelper</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
