@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // 有关程序集的常规信息通过以下
 // 特性集控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("Crow.Little.JXCBusiness")]
+[assembly: AssemblyTitle("Crow.Little.Option")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Crow.Little.JXCBusiness")]
+[assembly: AssemblyProduct("Crow.Little.Option")]
 [assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // 如果此项目向 COM 公开，则下列 GUID 用于类型库的 ID
-[assembly: Guid("ec532338-e6d2-4dd4-b1d1-5049700d73c7")]
+[assembly: Guid("f2b26885-99bf-4065-8c22-2e06fc76b489")]
 
 // 程序集的版本信息由下面四个值组成:
 //

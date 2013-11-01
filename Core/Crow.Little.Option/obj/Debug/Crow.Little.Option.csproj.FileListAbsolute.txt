@@ -1,0 +1,5 @@
+E:\personal\privateProjects\Crow.Little.JXC\Core\Crow.Little.Option\bin\Debug\Crow.Little.Option.dll
+E:\personal\privateProjects\Crow.Little.JXC\Core\Crow.Little.Option\bin\Debug\Crow.Little.Option.pdb
+E:\personal\privateProjects\Crow.Little.JXC\Core\Crow.Little.Option\obj\Debug\Crow.Little.Option.csprojResolveAssemblyReference.cache
+E:\personal\privateProjects\Crow.Little.JXC\Core\Crow.Little.Option\obj\Debug\Crow.Little.Option.dll
+E:\personal\privateProjects\Crow.Little.JXC\Core\Crow.Little.Option\obj\Debug\Crow.Little.Option.pdb
