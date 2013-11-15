@@ -28,7 +28,7 @@ namespace Crow.Little.JXC.BasicControl.DataAccess
 			string strSql = @"
 SELECT [ID],[Code],[CommodityName],[CommodityStyle],[CommodityType],[CommodityMaterial],[CommodityBrand],[IsActive],[Description]
 FROM [Commodity]";
-			using (DbDataReader reader = DBAccesser.DbInstance.ExecuteReader(strSql))
+			using (DbDataReader reader = CommonSingleton<MajorAssistant>.GetInstance().DbInstance.ExecuteReader(strSql))
 			{
 				while (reader.Read())
 				{
@@ -48,9 +48,9 @@ SELECT [ID],[Code],[CommodityName],[CommodityStyle],[CommodityType],[CommodityMa
 FROM [Commodity]
 WHERE [ID] = @ID ";
 			List<DbParameter> paramList = new List<DbParameter>();
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@ID", ID, DbType.String));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@ID", ID, DbType.String));
 
-			using (DbDataReader reader = DBAccesser.DbInstance.ExecuteReader(strSql, CommandType.Text, paramList.ToArray()))
+			using (DbDataReader reader = CommonSingleton<MajorAssistant>.GetInstance().DbInstance.ExecuteReader(strSql, CommandType.Text, paramList.ToArray()))
 			{
 				while (reader.Read())
 				{
@@ -66,9 +66,9 @@ WHERE [ID] = @ID ";
 		{
 			string strSql = @"DELETE FROM [Commodity] WHERE [ID] = @ID ";
 			List<DbParameter> paramList = new List<DbParameter>();
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@ID", ID, DbType.String));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@ID", ID, DbType.String));
 
-			int res = DBAccesser.DbInstance.ExecuteNonQuery(strSql, CommandType.Text, paramList.ToArray());
+			int res = CommonSingleton<MajorAssistant>.GetInstance().DbInstance.ExecuteNonQuery(strSql, CommandType.Text, paramList.ToArray());
 			return res > 0 ; 
 		}
 
@@ -80,17 +80,17 @@ SET
 [Code] = @Code, [CommodityName] = @CommodityName, [CommodityStyle] = @CommodityStyle, [CommodityType] = @CommodityType, [CommodityMaterial] = @CommodityMaterial, [CommodityBrand] = @CommodityBrand, [IsActive] = @IsActive, [Description] = @Description
 WHERE [ID] = @ID ";
 			List<DbParameter> paramList = new List<DbParameter>();
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@ID", model.ID, DbType.String));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@Code", model.Code, DbType.Int64));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@CommodityName", model.CommodityName, DbType.String));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@CommodityStyle", model.CommodityStyle, DbType.Int64));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@CommodityType", model.CommodityType, DbType.Int64));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@CommodityMaterial", model.CommodityMaterial, DbType.Int64));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@CommodityBrand", model.CommodityBrand, DbType.Int64));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@IsActive", model.IsActive, DbType.Int64));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@Description", model.Description, DbType.String));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@ID", model.ID, DbType.String));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@Code", model.Code, DbType.Int64));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@CommodityName", model.CommodityName, DbType.String));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@CommodityStyle", model.CommodityStyle, DbType.Int64));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@CommodityType", model.CommodityType, DbType.Int64));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@CommodityMaterial", model.CommodityMaterial, DbType.Int64));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@CommodityBrand", model.CommodityBrand, DbType.Int64));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@IsActive", model.IsActive, DbType.Int64));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@Description", model.Description, DbType.String));
 
-			int res = DBAccesser.DbInstance.ExecuteNonQuery(strSql, CommandType.Text, paramList.ToArray());
+			int res = CommonSingleton<MajorAssistant>.GetInstance().DbInstance.ExecuteNonQuery(strSql, CommandType.Text, paramList.ToArray());
 			return res > 0 ; 
 		}
 
@@ -100,17 +100,17 @@ WHERE [ID] = @ID ";
 INSERT INTO [Commodity] ([ID], [Code], [CommodityName], [CommodityStyle], [CommodityType], [CommodityMaterial], [CommodityBrand], [IsActive], [Description])
 VALUES (@ID, @Code, @CommodityName, @CommodityStyle, @CommodityType, @CommodityMaterial, @CommodityBrand, @IsActive, @Description)";
 			List<DbParameter> paramList = new List<DbParameter>();
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@ID", model.ID, DbType.String));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@Code", model.Code, DbType.Int64));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@CommodityName", model.CommodityName, DbType.String));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@CommodityStyle", model.CommodityStyle, DbType.Int64));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@CommodityType", model.CommodityType, DbType.Int64));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@CommodityMaterial", model.CommodityMaterial, DbType.Int64));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@CommodityBrand", model.CommodityBrand, DbType.Int64));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@IsActive", model.IsActive, DbType.Int64));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@Description", model.Description, DbType.String));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@ID", model.ID, DbType.String));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@Code", model.Code, DbType.Int64));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@CommodityName", model.CommodityName, DbType.String));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@CommodityStyle", model.CommodityStyle, DbType.Int64));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@CommodityType", model.CommodityType, DbType.Int64));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@CommodityMaterial", model.CommodityMaterial, DbType.Int64));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@CommodityBrand", model.CommodityBrand, DbType.Int64));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@IsActive", model.IsActive, DbType.Int64));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@Description", model.Description, DbType.String));
 
-			int res = DBAccesser.DbInstance.ExecuteNonQuery(strSql, CommandType.Text, paramList.ToArray());
+			int res = CommonSingleton<MajorAssistant>.GetInstance().DbInstance.ExecuteNonQuery(strSql, CommandType.Text, paramList.ToArray());
 			return res > 0 ; 
 		}
 

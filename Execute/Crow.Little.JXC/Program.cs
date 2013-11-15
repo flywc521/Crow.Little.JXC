@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Crow.Little.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
@@ -27,6 +28,7 @@ namespace Crow.Little.JXC
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            ApplicationInit();
             if (UIController.ApplicationLogon())
             {
                 UIController.StartApplication();
@@ -36,6 +38,12 @@ namespace Crow.Little.JXC
         private static void Application_ApplicationExit(object sender, EventArgs e)
         {
             UIController.CloseApplication();
+        }
+
+        private static void ApplicationInit()
+        {
+            //TODO:change to init application by config file
+            CommonSingleton<Crow.Little.JXC.BasicControl.MajorAssistant>.GetInstance().Init();
         }
         #endregion
     }

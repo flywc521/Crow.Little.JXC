@@ -28,7 +28,7 @@ namespace Crow.Little.JXC.BasicControl.DataAccess
 			string strSql = @"
 SELECT [SupplierID],[TagID]
 FROM [TagsForSupplier]";
-			using (DbDataReader reader = DBAccesser.DbInstance.ExecuteReader(strSql))
+			using (DbDataReader reader = CommonSingleton<MajorAssistant>.GetInstance().DbInstance.ExecuteReader(strSql))
 			{
 				while (reader.Read())
 				{
@@ -48,10 +48,10 @@ SELECT [SupplierID],[TagID]
 FROM [TagsForSupplier]
 WHERE [SupplierID] = @SupplierID AND [TagID] = @TagID ";
 			List<DbParameter> paramList = new List<DbParameter>();
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@SupplierID", SupplierID, DbType.String));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@TagID", TagID, DbType.Int64));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@SupplierID", SupplierID, DbType.String));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@TagID", TagID, DbType.Int64));
 
-			using (DbDataReader reader = DBAccesser.DbInstance.ExecuteReader(strSql, CommandType.Text, paramList.ToArray()))
+			using (DbDataReader reader = CommonSingleton<MajorAssistant>.GetInstance().DbInstance.ExecuteReader(strSql, CommandType.Text, paramList.ToArray()))
 			{
 				while (reader.Read())
 				{
@@ -67,10 +67,10 @@ WHERE [SupplierID] = @SupplierID AND [TagID] = @TagID ";
 		{
 			string strSql = @"DELETE FROM [TagsForSupplier] WHERE [SupplierID] = @SupplierID AND [TagID] = @TagID ";
 			List<DbParameter> paramList = new List<DbParameter>();
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@SupplierID", SupplierID, DbType.String));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@TagID", TagID, DbType.Int64));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@SupplierID", SupplierID, DbType.String));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@TagID", TagID, DbType.Int64));
 
-			int res = DBAccesser.DbInstance.ExecuteNonQuery(strSql, CommandType.Text, paramList.ToArray());
+			int res = CommonSingleton<MajorAssistant>.GetInstance().DbInstance.ExecuteNonQuery(strSql, CommandType.Text, paramList.ToArray());
 			return res > 0 ; 
 		}
 
@@ -81,10 +81,10 @@ UPDATE [TagsForSupplier]
 SET 
 WHERE [SupplierID] = @SupplierID AND [TagID] = @TagID ";
 			List<DbParameter> paramList = new List<DbParameter>();
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@SupplierID", model.SupplierID, DbType.String));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@TagID", model.TagID, DbType.Int64));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@SupplierID", model.SupplierID, DbType.String));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@TagID", model.TagID, DbType.Int64));
 
-			int res = DBAccesser.DbInstance.ExecuteNonQuery(strSql, CommandType.Text, paramList.ToArray());
+			int res = CommonSingleton<MajorAssistant>.GetInstance().DbInstance.ExecuteNonQuery(strSql, CommandType.Text, paramList.ToArray());
 			return res > 0 ; 
 		}
 
@@ -94,10 +94,10 @@ WHERE [SupplierID] = @SupplierID AND [TagID] = @TagID ";
 INSERT INTO [TagsForSupplier] ([SupplierID], [TagID])
 VALUES (@SupplierID, @TagID)";
 			List<DbParameter> paramList = new List<DbParameter>();
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@SupplierID", model.SupplierID, DbType.String));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@TagID", model.TagID, DbType.Int64));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@SupplierID", model.SupplierID, DbType.String));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@TagID", model.TagID, DbType.Int64));
 
-			int res = DBAccesser.DbInstance.ExecuteNonQuery(strSql, CommandType.Text, paramList.ToArray());
+			int res = CommonSingleton<MajorAssistant>.GetInstance().DbInstance.ExecuteNonQuery(strSql, CommandType.Text, paramList.ToArray());
 			return res > 0 ; 
 		}
 

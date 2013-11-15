@@ -28,7 +28,7 @@ namespace Crow.Little.JXC.BasicControl.DataAccess
 			string strSql = @"
 SELECT [ID],[DepartmentName],[Description]
 FROM [Department]";
-			using (DbDataReader reader = DBAccesser.DbInstance.ExecuteReader(strSql))
+			using (DbDataReader reader = CommonSingleton<MajorAssistant>.GetInstance().DbInstance.ExecuteReader(strSql))
 			{
 				while (reader.Read())
 				{
@@ -48,9 +48,9 @@ SELECT [ID],[DepartmentName],[Description]
 FROM [Department]
 WHERE [ID] = @ID ";
 			List<DbParameter> paramList = new List<DbParameter>();
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@ID", ID, DbType.String));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@ID", ID, DbType.String));
 
-			using (DbDataReader reader = DBAccesser.DbInstance.ExecuteReader(strSql, CommandType.Text, paramList.ToArray()))
+			using (DbDataReader reader = CommonSingleton<MajorAssistant>.GetInstance().DbInstance.ExecuteReader(strSql, CommandType.Text, paramList.ToArray()))
 			{
 				while (reader.Read())
 				{
@@ -66,9 +66,9 @@ WHERE [ID] = @ID ";
 		{
 			string strSql = @"DELETE FROM [Department] WHERE [ID] = @ID ";
 			List<DbParameter> paramList = new List<DbParameter>();
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@ID", ID, DbType.String));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@ID", ID, DbType.String));
 
-			int res = DBAccesser.DbInstance.ExecuteNonQuery(strSql, CommandType.Text, paramList.ToArray());
+			int res = CommonSingleton<MajorAssistant>.GetInstance().DbInstance.ExecuteNonQuery(strSql, CommandType.Text, paramList.ToArray());
 			return res > 0 ; 
 		}
 
@@ -80,11 +80,11 @@ SET
 [DepartmentName] = @DepartmentName, [Description] = @Description
 WHERE [ID] = @ID ";
 			List<DbParameter> paramList = new List<DbParameter>();
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@ID", model.ID, DbType.String));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@DepartmentName", model.DepartmentName, DbType.String));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@Description", model.Description, DbType.String));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@ID", model.ID, DbType.String));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@DepartmentName", model.DepartmentName, DbType.String));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@Description", model.Description, DbType.String));
 
-			int res = DBAccesser.DbInstance.ExecuteNonQuery(strSql, CommandType.Text, paramList.ToArray());
+			int res = CommonSingleton<MajorAssistant>.GetInstance().DbInstance.ExecuteNonQuery(strSql, CommandType.Text, paramList.ToArray());
 			return res > 0 ; 
 		}
 
@@ -94,11 +94,11 @@ WHERE [ID] = @ID ";
 INSERT INTO [Department] ([ID], [DepartmentName], [Description])
 VALUES (@ID, @DepartmentName, @Description)";
 			List<DbParameter> paramList = new List<DbParameter>();
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@ID", model.ID, DbType.String));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@DepartmentName", model.DepartmentName, DbType.String));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@Description", model.Description, DbType.String));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@ID", model.ID, DbType.String));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@DepartmentName", model.DepartmentName, DbType.String));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@Description", model.Description, DbType.String));
 
-			int res = DBAccesser.DbInstance.ExecuteNonQuery(strSql, CommandType.Text, paramList.ToArray());
+			int res = CommonSingleton<MajorAssistant>.GetInstance().DbInstance.ExecuteNonQuery(strSql, CommandType.Text, paramList.ToArray());
 			return res > 0 ; 
 		}
 

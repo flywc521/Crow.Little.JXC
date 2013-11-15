@@ -28,7 +28,7 @@ namespace Crow.Little.JXC.BasicControl.DataAccess
 			string strSql = @"
 SELECT [ID],[BrokenDate],[OperatorID],[Description]
 FROM [Broken]";
-			using (DbDataReader reader = DBAccesser.DbInstance.ExecuteReader(strSql))
+			using (DbDataReader reader = CommonSingleton<MajorAssistant>.GetInstance().DbInstance.ExecuteReader(strSql))
 			{
 				while (reader.Read())
 				{
@@ -48,9 +48,9 @@ SELECT [ID],[BrokenDate],[OperatorID],[Description]
 FROM [Broken]
 WHERE [ID] = @ID ";
 			List<DbParameter> paramList = new List<DbParameter>();
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@ID", ID, DbType.String));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@ID", ID, DbType.String));
 
-			using (DbDataReader reader = DBAccesser.DbInstance.ExecuteReader(strSql, CommandType.Text, paramList.ToArray()))
+			using (DbDataReader reader = CommonSingleton<MajorAssistant>.GetInstance().DbInstance.ExecuteReader(strSql, CommandType.Text, paramList.ToArray()))
 			{
 				while (reader.Read())
 				{
@@ -66,9 +66,9 @@ WHERE [ID] = @ID ";
 		{
 			string strSql = @"DELETE FROM [Broken] WHERE [ID] = @ID ";
 			List<DbParameter> paramList = new List<DbParameter>();
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@ID", ID, DbType.String));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@ID", ID, DbType.String));
 
-			int res = DBAccesser.DbInstance.ExecuteNonQuery(strSql, CommandType.Text, paramList.ToArray());
+			int res = CommonSingleton<MajorAssistant>.GetInstance().DbInstance.ExecuteNonQuery(strSql, CommandType.Text, paramList.ToArray());
 			return res > 0 ; 
 		}
 
@@ -80,12 +80,12 @@ SET
 [BrokenDate] = @BrokenDate, [OperatorID] = @OperatorID, [Description] = @Description
 WHERE [ID] = @ID ";
 			List<DbParameter> paramList = new List<DbParameter>();
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@ID", model.ID, DbType.String));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@BrokenDate", model.BrokenDate, DbType.DateTime));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@OperatorID", model.OperatorID, DbType.String));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@Description", model.Description, DbType.String));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@ID", model.ID, DbType.String));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@BrokenDate", model.BrokenDate, DbType.DateTime));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@OperatorID", model.OperatorID, DbType.String));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@Description", model.Description, DbType.String));
 
-			int res = DBAccesser.DbInstance.ExecuteNonQuery(strSql, CommandType.Text, paramList.ToArray());
+			int res = CommonSingleton<MajorAssistant>.GetInstance().DbInstance.ExecuteNonQuery(strSql, CommandType.Text, paramList.ToArray());
 			return res > 0 ; 
 		}
 
@@ -95,12 +95,12 @@ WHERE [ID] = @ID ";
 INSERT INTO [Broken] ([ID], [BrokenDate], [OperatorID], [Description])
 VALUES (@ID, @BrokenDate, @OperatorID, @Description)";
 			List<DbParameter> paramList = new List<DbParameter>();
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@ID", model.ID, DbType.String));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@BrokenDate", model.BrokenDate, DbType.DateTime));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@OperatorID", model.OperatorID, DbType.String));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@Description", model.Description, DbType.String));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@ID", model.ID, DbType.String));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@BrokenDate", model.BrokenDate, DbType.DateTime));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@OperatorID", model.OperatorID, DbType.String));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@Description", model.Description, DbType.String));
 
-			int res = DBAccesser.DbInstance.ExecuteNonQuery(strSql, CommandType.Text, paramList.ToArray());
+			int res = CommonSingleton<MajorAssistant>.GetInstance().DbInstance.ExecuteNonQuery(strSql, CommandType.Text, paramList.ToArray());
 			return res > 0 ; 
 		}
 

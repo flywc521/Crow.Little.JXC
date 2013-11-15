@@ -28,7 +28,7 @@ namespace Crow.Little.JXC.BasicControl.DataAccess
 			string strSql = @"
 SELECT [ID],[SupplierName],[SupplierTel],[SupplierMobile],[SupplierAddress],[SupplierZipCode],[Description]
 FROM [Supplier]";
-			using (DbDataReader reader = DBAccesser.DbInstance.ExecuteReader(strSql))
+			using (DbDataReader reader = CommonSingleton<MajorAssistant>.GetInstance().DbInstance.ExecuteReader(strSql))
 			{
 				while (reader.Read())
 				{
@@ -48,9 +48,9 @@ SELECT [ID],[SupplierName],[SupplierTel],[SupplierMobile],[SupplierAddress],[Sup
 FROM [Supplier]
 WHERE [ID] = @ID ";
 			List<DbParameter> paramList = new List<DbParameter>();
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@ID", ID, DbType.String));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@ID", ID, DbType.String));
 
-			using (DbDataReader reader = DBAccesser.DbInstance.ExecuteReader(strSql, CommandType.Text, paramList.ToArray()))
+			using (DbDataReader reader = CommonSingleton<MajorAssistant>.GetInstance().DbInstance.ExecuteReader(strSql, CommandType.Text, paramList.ToArray()))
 			{
 				while (reader.Read())
 				{
@@ -66,9 +66,9 @@ WHERE [ID] = @ID ";
 		{
 			string strSql = @"DELETE FROM [Supplier] WHERE [ID] = @ID ";
 			List<DbParameter> paramList = new List<DbParameter>();
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@ID", ID, DbType.String));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@ID", ID, DbType.String));
 
-			int res = DBAccesser.DbInstance.ExecuteNonQuery(strSql, CommandType.Text, paramList.ToArray());
+			int res = CommonSingleton<MajorAssistant>.GetInstance().DbInstance.ExecuteNonQuery(strSql, CommandType.Text, paramList.ToArray());
 			return res > 0 ; 
 		}
 
@@ -80,15 +80,15 @@ SET
 [SupplierName] = @SupplierName, [SupplierTel] = @SupplierTel, [SupplierMobile] = @SupplierMobile, [SupplierAddress] = @SupplierAddress, [SupplierZipCode] = @SupplierZipCode, [Description] = @Description
 WHERE [ID] = @ID ";
 			List<DbParameter> paramList = new List<DbParameter>();
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@ID", model.ID, DbType.String));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@SupplierName", model.SupplierName, DbType.String));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@SupplierTel", model.SupplierTel, DbType.String));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@SupplierMobile", model.SupplierMobile, DbType.String));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@SupplierAddress", model.SupplierAddress, DbType.String));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@SupplierZipCode", model.SupplierZipCode, DbType.String));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@Description", model.Description, DbType.String));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@ID", model.ID, DbType.String));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@SupplierName", model.SupplierName, DbType.String));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@SupplierTel", model.SupplierTel, DbType.String));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@SupplierMobile", model.SupplierMobile, DbType.String));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@SupplierAddress", model.SupplierAddress, DbType.String));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@SupplierZipCode", model.SupplierZipCode, DbType.String));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@Description", model.Description, DbType.String));
 
-			int res = DBAccesser.DbInstance.ExecuteNonQuery(strSql, CommandType.Text, paramList.ToArray());
+			int res = CommonSingleton<MajorAssistant>.GetInstance().DbInstance.ExecuteNonQuery(strSql, CommandType.Text, paramList.ToArray());
 			return res > 0 ; 
 		}
 
@@ -98,15 +98,15 @@ WHERE [ID] = @ID ";
 INSERT INTO [Supplier] ([ID], [SupplierName], [SupplierTel], [SupplierMobile], [SupplierAddress], [SupplierZipCode], [Description])
 VALUES (@ID, @SupplierName, @SupplierTel, @SupplierMobile, @SupplierAddress, @SupplierZipCode, @Description)";
 			List<DbParameter> paramList = new List<DbParameter>();
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@ID", model.ID, DbType.String));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@SupplierName", model.SupplierName, DbType.String));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@SupplierTel", model.SupplierTel, DbType.String));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@SupplierMobile", model.SupplierMobile, DbType.String));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@SupplierAddress", model.SupplierAddress, DbType.String));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@SupplierZipCode", model.SupplierZipCode, DbType.String));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@Description", model.Description, DbType.String));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@ID", model.ID, DbType.String));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@SupplierName", model.SupplierName, DbType.String));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@SupplierTel", model.SupplierTel, DbType.String));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@SupplierMobile", model.SupplierMobile, DbType.String));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@SupplierAddress", model.SupplierAddress, DbType.String));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@SupplierZipCode", model.SupplierZipCode, DbType.String));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@Description", model.Description, DbType.String));
 
-			int res = DBAccesser.DbInstance.ExecuteNonQuery(strSql, CommandType.Text, paramList.ToArray());
+			int res = CommonSingleton<MajorAssistant>.GetInstance().DbInstance.ExecuteNonQuery(strSql, CommandType.Text, paramList.ToArray());
 			return res > 0 ; 
 		}
 

@@ -69,31 +69,31 @@
     <Compile Include="Components\CloseableTabPage.designer.cs">
       <DependentUpon>CloseableTabPage.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\JXCContainerForm.cs">
+    <Compile Include="Forms\ContainerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="JXCMessageBox.cs" />
+    <Compile Include="CustomMessageBox.cs" />
     <Compile Include="Properties\Resource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\ctrlMenuButton.cs">
+    <Compile Include="UserControls\MenuButton.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserControls\ctrlMenuButton.Designer.cs">
-      <DependentUpon>ctrlMenuButton.cs</DependentUpon>
+    <Compile Include="UserControls\MenuButton.Designer.cs">
+      <DependentUpon>MenuButton.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\ctrlMenuButtonPanel.cs">
+    <Compile Include="UserControls\MenuButtonPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserControls\ctrlMenuButtonPanel.Designer.cs">
-      <DependentUpon>ctrlMenuButtonPanel.cs</DependentUpon>
+    <Compile Include="UserControls\MenuButtonPanel.Designer.cs">
+      <DependentUpon>MenuButtonPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\JXCContainedControl.cs">
+    <Compile Include="UserControls\ContainedControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="JXCCustomeAction.cs" />
+    <Compile Include="CustomAction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
@@ -126,11 +126,11 @@
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\ctrlMenuButton.resx">
-      <DependentUpon>ctrlMenuButton.cs</DependentUpon>
+    <EmbeddedResource Include="UserControls\MenuButton.resx">
+      <DependentUpon>MenuButton.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\ctrlMenuButtonPanel.resx">
-      <DependentUpon>ctrlMenuButtonPanel.cs</DependentUpon>
+    <EmbeddedResource Include="UserControls\MenuButtonPanel.resx">
+      <DependentUpon>MenuButtonPanel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

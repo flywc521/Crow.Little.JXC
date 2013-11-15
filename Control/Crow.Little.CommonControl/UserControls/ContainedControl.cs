@@ -10,11 +10,10 @@ namespace Crow.Little.CommonControl
     /// <summary>
     /// 本进销存系统中的被包含控件
     /// </summary>
-    public class JXCContainedControl : UserControl
+    public class ContainedControl : UserControl
     {
         #region Field
         #endregion
-
         #region Property
         public Button AcceptButton
         {
@@ -28,10 +27,8 @@ namespace Crow.Little.CommonControl
             set;
         }
         #endregion
-
         #region Constructor
         #endregion
-
         #region Event
         /// <summary>
         /// 控件标签变更时触发
@@ -53,7 +50,6 @@ namespace Crow.Little.CommonControl
         /// </summary>
         public event EventHandler<CommonEventArgs<DialogResult>> ControlClosedAsDialogBox;
         #endregion
-
         #region Method
         /// <summary>
         /// 初始化自定义控件，基类中未实现任何操作

@@ -7,18 +7,16 @@ using Crow.Little.Common;
 
 namespace Crow.Little.CommonControl
 {
-    internal class JXCContainerForm : Form
+    internal class ContainerForm : Form
     {
         #region Field
-        private JXCContainedControl ctrl;
+        private ContainedControl ctrl;
         private bool isInnerControlCancelClosing = false;
         #endregion
-
         #region Property
         #endregion
-
         #region Constructor
-        internal JXCContainerForm(JXCContainedControl _ctrl)
+        internal ContainerForm(ContainedControl _ctrl)
         {
             this.ctrl = _ctrl;
             this.Controls.Add(ctrl);
@@ -32,10 +30,8 @@ namespace Crow.Little.CommonControl
             ctrl.ControlClosedAsDialogBox += new EventHandler<CommonEventArgs<DialogResult>>(ctrl_ControlClosedAsDialogBox);
         }
         #endregion
-
         #region Event
         #endregion
-
         #region Method
         private void JXCContainerForm_FormClosing(object sender, FormClosingEventArgs e)
         {

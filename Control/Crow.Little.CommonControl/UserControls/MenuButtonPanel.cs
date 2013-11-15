@@ -10,7 +10,7 @@ using Crow.Little.Common;
 
 namespace Crow.Little.CommonControl
 {
-    public partial class ctrlMenuButtonPanel : UserControl
+    public partial class MenuButtonPanel : UserControl
     {
         #region Field
         #endregion
@@ -19,7 +19,7 @@ namespace Crow.Little.CommonControl
         #endregion
 
         #region Constructor
-        public ctrlMenuButtonPanel()
+        public MenuButtonPanel()
         {
             InitializeComponent();
         }
@@ -44,22 +44,22 @@ namespace Crow.Little.CommonControl
         {
             foreach (Control ctrl in this.flpMenuButton.Controls)
             {
-                if (ctrl is ctrlMenuButton)
+                if (ctrl is MenuButton)
                 {
-                    ((ctrlMenuButton)ctrl).UnActiveTitle();
+                    ((MenuButton)ctrl).UnActiveTitle();
                 }
             }
 
-            ctrlMenuButton menuButton = sender as ctrlMenuButton;
+            MenuButton menuButton = sender as MenuButton;
             if (menuButton != null)
             {
                 menuButton.ActiveTitle();
             }
         }
 
-        private ctrlMenuButton AddMenuButton(string title, Image img, EventHandler eventAction, bool isDefault)
+        private MenuButton AddMenuButton(string title, Image img, EventHandler eventAction, bool isDefault)
         {
-            ctrlMenuButton menuButton = new ctrlMenuButton();
+            MenuButton menuButton = new MenuButton();
             menuButton.AddMenuButton(title, img, eventAction, isDefault);
 
             menuButton.Width = this.Width - menuButton.Margin.Left - menuButton.Margin.Right;
@@ -69,7 +69,7 @@ namespace Crow.Little.CommonControl
             return menuButton;
         }
 
-        private void OnMenuButtonAdded(ctrlMenuButton menuButton)
+        private void OnMenuButtonAdded(MenuButton menuButton)
         {
             if (MenuButtonAdded != null)
             {

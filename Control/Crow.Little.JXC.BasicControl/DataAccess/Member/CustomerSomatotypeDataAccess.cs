@@ -28,7 +28,7 @@ namespace Crow.Little.JXC.BasicControl.DataAccess
 			string strSql = @"
 SELECT [CustomerID],[Height],[Weight],[BustSize],[WaistSize],[HipSize]
 FROM [CustomerSomatotype]";
-			using (DbDataReader reader = DBAccesser.DbInstance.ExecuteReader(strSql))
+			using (DbDataReader reader = CommonSingleton<MajorAssistant>.GetInstance().DbInstance.ExecuteReader(strSql))
 			{
 				while (reader.Read())
 				{
@@ -48,9 +48,9 @@ SELECT [CustomerID],[Height],[Weight],[BustSize],[WaistSize],[HipSize]
 FROM [CustomerSomatotype]
 WHERE [CustomerID] = @CustomerID ";
 			List<DbParameter> paramList = new List<DbParameter>();
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@CustomerID", CustomerID, DbType.String));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@CustomerID", CustomerID, DbType.String));
 
-			using (DbDataReader reader = DBAccesser.DbInstance.ExecuteReader(strSql, CommandType.Text, paramList.ToArray()))
+			using (DbDataReader reader = CommonSingleton<MajorAssistant>.GetInstance().DbInstance.ExecuteReader(strSql, CommandType.Text, paramList.ToArray()))
 			{
 				while (reader.Read())
 				{
@@ -66,9 +66,9 @@ WHERE [CustomerID] = @CustomerID ";
 		{
 			string strSql = @"DELETE FROM [CustomerSomatotype] WHERE [CustomerID] = @CustomerID ";
 			List<DbParameter> paramList = new List<DbParameter>();
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@CustomerID", CustomerID, DbType.String));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@CustomerID", CustomerID, DbType.String));
 
-			int res = DBAccesser.DbInstance.ExecuteNonQuery(strSql, CommandType.Text, paramList.ToArray());
+			int res = CommonSingleton<MajorAssistant>.GetInstance().DbInstance.ExecuteNonQuery(strSql, CommandType.Text, paramList.ToArray());
 			return res > 0 ; 
 		}
 
@@ -80,14 +80,14 @@ SET
 [Height] = @Height, [Weight] = @Weight, [BustSize] = @BustSize, [WaistSize] = @WaistSize, [HipSize] = @HipSize
 WHERE [CustomerID] = @CustomerID ";
 			List<DbParameter> paramList = new List<DbParameter>();
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@CustomerID", model.CustomerID, DbType.String));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@Height", model.Height, DbType.Int64));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@Weight", model.Weight, DbType.Int64));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@BustSize", model.BustSize, DbType.Double));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@WaistSize", model.WaistSize, DbType.Double));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@HipSize", model.HipSize, DbType.Double));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@CustomerID", model.CustomerID, DbType.String));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@Height", model.Height, DbType.Int64));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@Weight", model.Weight, DbType.Int64));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@BustSize", model.BustSize, DbType.Double));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@WaistSize", model.WaistSize, DbType.Double));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@HipSize", model.HipSize, DbType.Double));
 
-			int res = DBAccesser.DbInstance.ExecuteNonQuery(strSql, CommandType.Text, paramList.ToArray());
+			int res = CommonSingleton<MajorAssistant>.GetInstance().DbInstance.ExecuteNonQuery(strSql, CommandType.Text, paramList.ToArray());
 			return res > 0 ; 
 		}
 
@@ -97,14 +97,14 @@ WHERE [CustomerID] = @CustomerID ";
 INSERT INTO [CustomerSomatotype] ([CustomerID], [Height], [Weight], [BustSize], [WaistSize], [HipSize])
 VALUES (@CustomerID, @Height, @Weight, @BustSize, @WaistSize, @HipSize)";
 			List<DbParameter> paramList = new List<DbParameter>();
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@CustomerID", model.CustomerID, DbType.String));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@Height", model.Height, DbType.Int64));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@Weight", model.Weight, DbType.Int64));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@BustSize", model.BustSize, DbType.Double));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@WaistSize", model.WaistSize, DbType.Double));
-			paramList.Add(DBAccesser.DbInstance.BuildDbParameter("@HipSize", model.HipSize, DbType.Double));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@CustomerID", model.CustomerID, DbType.String));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@Height", model.Height, DbType.Int64));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@Weight", model.Weight, DbType.Int64));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@BustSize", model.BustSize, DbType.Double));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@WaistSize", model.WaistSize, DbType.Double));
+			paramList.Add(CommonSingleton<MajorAssistant>.GetInstance().DbInstance.BuildDbParameter("@HipSize", model.HipSize, DbType.Double));
 
-			int res = DBAccesser.DbInstance.ExecuteNonQuery(strSql, CommandType.Text, paramList.ToArray());
+			int res = CommonSingleton<MajorAssistant>.GetInstance().DbInstance.ExecuteNonQuery(strSql, CommandType.Text, paramList.ToArray());
 			return res > 0 ; 
 		}
 

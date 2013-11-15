@@ -1,6 +1,6 @@
 ﻿namespace Crow.Little.CommonControl
 {
-    partial class ctrlMenuButtonPanel
+    partial class MenuButtonPanel
     {
         /// <summary> 
         /// 必需的设计器变量。

@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MajorAssistant.cs" />
     <Compile Include="Model\JXC\Broken\Broken.cs" />
     <Compile Include="DataAccess\JXC\Broken\BrokenDataAccess.cs" />
     <Compile Include="Model\JXC\Broken\BrokenDetail.cs" />
@@ -52,20 +53,6 @@
     <Compile Include="DataAccess\Member\CustomerSomatotypeDataAccess.cs" />
     <Compile Include="Model\Member\Department.cs" />
     <Compile Include="DataAccess\Member\DepartmentDataAccess.cs" />
-    <Compile Include="Model\Dict\DictBrand.cs" />
-    <Compile Include="DataAccess\Dict\DictBrandDataAccess.cs" />
-    <Compile Include="Model\Dict\DictColor.cs" />
-    <Compile Include="DataAccess\Dict\DictColorDataAccess.cs" />
-    <Compile Include="Model\Dict\DictMaterial.cs" />
-    <Compile Include="DataAccess\Dict\DictMaterialDataAccess.cs" />
-    <Compile Include="Model\Dict\DictSize.cs" />
-    <Compile Include="DataAccess\Dict\DictSizeDataAccess.cs" />
-    <Compile Include="Model\Dict\DictStyle.cs" />
-    <Compile Include="DataAccess\Dict\DictStyleDataAccess.cs" />
-    <Compile Include="Model\Dict\DictTag.cs" />
-    <Compile Include="DataAccess\Dict\DictTagDataAccess.cs" />
-    <Compile Include="Model\Dict\DictType.cs" />
-    <Compile Include="DataAccess\Dict\DictTypeDataAccess.cs" />
     <Compile Include="Model\Member\Employee.cs" />
     <Compile Include="DataAccess\Member\EmployeeDataAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -111,6 +98,10 @@
     <Compile Include="DataAccess\Tags\TagsForSupplierDataAccess.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Core\Crow.Little.Option\Crow.Little.Option.csproj">
+      <Project>{00c0c87b-9bec-4d0f-a1d0-b7b4448359e2}</Project>
+      <Name>Crow.Little.Option</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Crow.Little.CommonControl\Crow.Little.CommonControl.csproj">
       <Project>{152c5599-9a3d-4e7a-b12c-21741ca2ac76}</Project>
       <Name>Crow.Little.CommonControl</Name>

@@ -10,7 +10,7 @@ namespace Crow.Little.CommonControl
     /// <summary>
     /// 本进销存系统中对控件的自定义动作(如TAB页显示,新窗体中显示,新对话框窗体中显示...)
     /// </summary>
-    public static class JXCCustomeAction
+    public static class CustomAction
     {
         #region Field
         private static readonly Size dftSize = new Size(640, 480);
@@ -23,7 +23,7 @@ namespace Crow.Little.CommonControl
         #endregion
         #region Method
         #region As Child Control
-        public static void ShowControlInParentControlAsDock(string title, JXCContainedControl ctrl, Control pCtrl)
+        public static void ShowControlInParentControlAsDock(string title, ContainedControl ctrl, Control pCtrl)
         {
             pCtrl.Controls.Clear();
             pCtrl.Controls.Add(ctrl);
@@ -33,7 +33,7 @@ namespace Crow.Little.CommonControl
         }
         #endregion  As TabPage
         #region As TabPage
-        public static void ShowControlInTabControl(string title, JXCContainedControl ctrl, CloseableTabControl tCtrl, bool showCloseButton = true)
+        public static void ShowControlInTabControl(string title, ContainedControl ctrl, CloseableTabControl tCtrl, bool showCloseButton = true)
         {
             if (IsChildControlExistedInTabControl(title, tCtrl))
             {
@@ -53,50 +53,50 @@ namespace Crow.Little.CommonControl
         }
         #endregion  As TabPage
         #region As New Form
-        public static void ShowControlInNewForm(string title, JXCContainedControl ctrl)
+        public static void ShowControlInNewForm(string title, ContainedControl ctrl)
         {
             Size size = new Size(ctrl.Width + ctrl.Margin.Left + ctrl.Margin.Right, ctrl.Height + ctrl.Margin.Top + ctrl.Margin.Bottom + 25);
             ShowControlInNewForm(title, ctrl, size);
         }
 
-        public static void ShowControlInNewForm(string title, JXCContainedControl ctrl, Size size)
+        public static void ShowControlInNewForm(string title, ContainedControl ctrl, Size size)
         {
             ShowControlInNewForm(title, ctrl, size, FormBorderStyle.Sizable, null);
         }
 
-        public static void ShowControlInNewForm(string title, JXCContainedControl ctrl, FormBorderStyle style)
+        public static void ShowControlInNewForm(string title, ContainedControl ctrl, FormBorderStyle style)
         {
             Size size = new Size(ctrl.Width + ctrl.Margin.Left + ctrl.Margin.Right, ctrl.Height + ctrl.Margin.Top + ctrl.Margin.Bottom + 25);
             ShowControlInNewForm(title, ctrl, size, FormBorderStyle.Sizable, null);
         }
 
-        public static void ShowControlInNewForm(string title, JXCContainedControl ctrl, Size size, FormBorderStyle style, Icon ico)
+        public static void ShowControlInNewForm(string title, ContainedControl ctrl, Size size, FormBorderStyle style, Icon ico)
         {
             Form frm = BuildFormForControl(title, ctrl, size, style, ico);
             frm.Show();
         }
         #endregion As New Form
         #region As New Singleton Form
-        public static void ShowControlInNewSingletonForm(string unique, string title, JXCContainedControl ctrl)
+        public static void ShowControlInNewSingletonForm(string unique, string title, ContainedControl ctrl)
         {
             Size size = new Size(ctrl.Width + ctrl.Margin.Left + ctrl.Margin.Right, ctrl.Height + ctrl.Margin.Top + ctrl.Margin.Bottom + 25);
             ShowControlInNewSingletonForm(unique, title, ctrl, size);
         }
 
-        public static void ShowControlInNewSingletonForm(string unique, string title, JXCContainedControl ctrl, Size size)
+        public static void ShowControlInNewSingletonForm(string unique, string title, ContainedControl ctrl, Size size)
         {
             ShowControlInNewSingletonForm(unique, title, ctrl, size, FormBorderStyle.Sizable, null);
         }
 
-        public static void ShowControlInNewSingletonForm(string unique, string title, JXCContainedControl ctrl, FormBorderStyle style)
+        public static void ShowControlInNewSingletonForm(string unique, string title, ContainedControl ctrl, FormBorderStyle style)
         {
             Size size = new Size(ctrl.Width + ctrl.Margin.Left + ctrl.Margin.Right, ctrl.Height + ctrl.Margin.Top + ctrl.Margin.Bottom + 25);
             ShowControlInNewSingletonForm(unique, title, ctrl, size, FormBorderStyle.Sizable, null);
         }
 
-        public static void ShowControlInNewSingletonForm(string unique, string title, JXCContainedControl ctrl, Size size, FormBorderStyle style, Icon ico)
+        public static void ShowControlInNewSingletonForm(string unique, string title, ContainedControl ctrl, Size size, FormBorderStyle style, Icon ico)
         {
-            JXCContainerForm frm = FindExistedFormForControl(unique, title);
+            ContainerForm frm = FindExistedFormForControl(unique, title);
             if (frm != null)
             {
                 frm.Activate();
@@ -109,24 +109,24 @@ namespace Crow.Little.CommonControl
         }
         #endregion As New Singleton Form
         #region As New Dialog Form
-        public static void ShowControlInNewDialogForm(string title, JXCContainedControl ctrl)
+        public static void ShowControlInNewDialogForm(string title, ContainedControl ctrl)
         {
             Size size = new Size(ctrl.Width + ctrl.Margin.Left + ctrl.Margin.Right, ctrl.Height + ctrl.Margin.Top + ctrl.Margin.Bottom + 25);
             ShowControlInNewDialogForm(title, ctrl, size);
         }
 
-        public static void ShowControlInNewDialogForm(string title, JXCContainedControl ctrl, Size size)
+        public static void ShowControlInNewDialogForm(string title, ContainedControl ctrl, Size size)
         {
             ShowControlInNewDialogForm(title, ctrl, size, FormBorderStyle.FixedDialog, null);
         }
 
-        public static void ShowControlInNewDialogForm(string title, JXCContainedControl ctrl, FormBorderStyle style)
+        public static void ShowControlInNewDialogForm(string title, ContainedControl ctrl, FormBorderStyle style)
         {
             Size size = new Size(ctrl.Width + ctrl.Margin.Left + ctrl.Margin.Right, ctrl.Height + ctrl.Margin.Top + ctrl.Margin.Bottom + 25);
             ShowControlInNewDialogForm(title, ctrl, size, style, null);
         }
 
-        public static void ShowControlInNewDialogForm(string title, JXCContainedControl ctrl, Size size, FormBorderStyle style, Icon ico)
+        public static void ShowControlInNewDialogForm(string title, ContainedControl ctrl, Size size, FormBorderStyle style, Icon ico)
         {
             Form frm = BuildFormForControl(title, ctrl, size, style, ico);
             frm.ShowDialog();
@@ -185,14 +185,14 @@ namespace Crow.Little.CommonControl
             }
         }
 
-        private static JXCContainerForm BuildFormForControl(string title, JXCContainedControl ctrl, Size size, FormBorderStyle style, Icon ico)
+        private static ContainerForm BuildFormForControl(string title, ContainedControl ctrl, Size size, FormBorderStyle style, Icon ico)
         {
             return BuildFormForControl(String.Empty, title, ctrl, size, style, ico);
         }
 
-        private static JXCContainerForm BuildFormForControl(string unique, string title, JXCContainedControl ctrl, Size size, FormBorderStyle style, Icon ico)
+        private static ContainerForm BuildFormForControl(string unique, string title, ContainedControl ctrl, Size size, FormBorderStyle style, Icon ico)
         {
-            JXCContainerForm frm = new JXCContainerForm(ctrl);
+            ContainerForm frm = new ContainerForm(ctrl);
             frm.Text = title;
             frm.Size = size;
             frm.FormBorderStyle = style;
@@ -214,13 +214,13 @@ namespace Crow.Little.CommonControl
             return frm;
         }
 
-        private static JXCContainerForm FindExistedFormForControl(string unique, string title)
+        private static ContainerForm FindExistedFormForControl(string unique, string title)
         {
             foreach (Form frm in Application.OpenForms)
             {
-                if (frm.Tag != null && frm.Tag is string && String.Compare(frm.Tag.ToString(), unique, true) == 0 && frm is JXCContainerForm)
+                if (frm.Tag != null && frm.Tag is string && String.Compare(frm.Tag.ToString(), unique, true) == 0 && frm is ContainerForm)
                 {
-                    return frm as JXCContainerForm;
+                    return frm as ContainerForm;
                 }
             }
             return null;

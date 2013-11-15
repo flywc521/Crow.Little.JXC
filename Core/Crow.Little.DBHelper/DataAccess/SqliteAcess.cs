@@ -19,7 +19,6 @@ namespace Crow.Little.DBHelper
         #region Field
         private SQLiteConnection accdbConn;
         #endregion
-
         #region Property
         protected override string ConnectionString
         {
@@ -41,16 +40,13 @@ namespace Crow.Little.DBHelper
             get { return accdbConn = accdbConn == null ? new SQLiteConnection(ConnectionString) : accdbConn; }
         }
         #endregion
-
         #region Constructor
         private SqliteAcess(string _srv, string _db, string _uid, string _pwd)
             : base(_srv, _db, _uid, _pwd)
         { }
         #endregion
-
         #region Event
         #endregion
-
         #region Method
         #region 构建数据库类型与系统类型的映射关系
         #region 布尔

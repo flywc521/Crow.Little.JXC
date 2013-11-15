@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace Crow.Little.CommonControl
 {
-    public static class JXCMessageBox
+    public static class CustomMessageBox
     {
         #region Field
         private static string title = "消息提示";

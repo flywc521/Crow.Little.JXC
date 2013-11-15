@@ -10,7 +10,7 @@ using Crow.Little.Common;
 
 namespace Crow.Little.CommonControl
 {
-    public partial class ctrlMenuButton : UserControl
+    public partial class MenuButton : UserControl
     {
         #region Field
         private bool isActive = false;
@@ -21,7 +21,7 @@ namespace Crow.Little.CommonControl
         #endregion
 
         #region Constructor
-        public ctrlMenuButton()
+        public MenuButton()
         {
             InitializeComponent();
         }
